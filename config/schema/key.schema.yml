@@ -1,0 +1,23 @@
+key.key.*:
+  type: config_entity
+  label: 'Key config'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    uuid:
+      type: string
+    policy_constraints:
+      type: key.key_type.plugin.[id]
+      label: 'Key Type'
+
+key.key_type.plugin:
+  type: mapping
+  label: 'Key type settings'
+  mapping:
+    id:
+      type: string
+      label: 'ID'

@@ -1,0 +1,14 @@
+{
+  "name": "drupal/key",
+  "type": "module",
+  "description": "Managing system keys",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "http://drupal.org/project/key",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "http://drupal.org/project/key",
+    "source": "http://cgit.drupalcode.org/key"
+  },
+  "require": { }
+}

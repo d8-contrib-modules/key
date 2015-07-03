@@ -1,0 +1,6 @@
+name: key
+type: module
+description: Managing system keys
+core: 8.x
+package: Security
+

@@ -1,0 +1,7 @@
+# Key menu items definition
+entity.key.collection:
+  title: 'Key'
+  route_name: entity.key.collection
+  description: 'List Key'
+  parent: system.admin_structure
+

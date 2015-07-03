@@ -1,0 +1,8 @@
+services:
+
+  key_manager:
+    class: Drupal\key\KeyManager
+
+  plugin.manager.key.key_type:
+    class: Drupal\key\KeyTypePluginManager
+    parent: default_plugin_manager

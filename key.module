@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * @file
+ * Contains key.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function key_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the key module.
+    case 'help.page.key':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Managing system keys') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function key_theme() {
+  $theme = [];
+
+  return $theme;
+}

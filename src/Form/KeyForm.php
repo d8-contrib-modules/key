@@ -10,6 +10,7 @@ namespace Drupal\key\Form;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Ajax\ReplaceCommand;
 
 /**
  * Class KeyForm.
@@ -22,6 +23,12 @@ class KeyForm extends EntityForm {
    */
   public function form(array $form, FormStateInterface $form_state) {
     $form = parent::form($form, $form_state);
+
+    $form['#attached']['library'][] = 'core/drupal.dialog.ajax';
+    $key_types = [];
+    foreach ($this->manager->getDefinitions() as $plugin_id => $definition) {
+      $key_types[$plugin_id] = (string) $definition['title'];
+    }
 
     $key = $this->entity;
     $form['label'] = array(
@@ -42,7 +49,22 @@ class KeyForm extends EntityForm {
       '#disabled' => !$key->isNew(),
     );
 
-    /* You will need additional form elements for your custom properties. */
+    $form['key_type'] = array(
+      '#type' => 'select',
+      '#options' => $key_types,
+      '#ajax' => [
+        'callback' => [$this, 'getKeyTypeForm'],
+        'event' => 'select',
+      ],
+    );
+
+    $form['key_type_form'] = array(
+      '#type' => 'container',
+      '#attributes' => array(
+        'id' => array('key-type-form')
+      ),
+    );
+
 
     return $form;
   }
@@ -65,6 +87,22 @@ class KeyForm extends EntityForm {
       )));
     }
     $form_state->setRedirectUrl($key->urlInfo('collection'));
+  }
+
+  /**
+   * AJAX action to retrieve the appropriate key type into the form.
+   *
+   * @param array $form
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   * @return \Drupal\key\Form\AjaxResponse
+   */
+  public function getKeyTypeForm(array &$form, FormStateInterface $form_state) {
+    $key_type = $form_state->getValue('key_type');
+    $content = \Drupal::formBuilder()->getForm('\Drupal\key\Form\KeyTypeForm', $key_type, $this->machine_name);
+    $content['#attached']['library'][] = 'core/drupal.dialog.ajax';
+    $response = new AjaxResponse();
+    $response->addCommand(new ReplaceCommand('#key-type-form', $content));
+    return $response;
   }
 
 }

@@ -7,10 +7,12 @@
 
 namespace Drupal\key\Form;
 
+use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\ReplaceCommand;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class KeyForm.
@@ -18,6 +20,23 @@ use Drupal\Core\Ajax\ReplaceCommand;
  * @package Drupal\key\Form
  */
 class KeyForm extends EntityForm {
+
+  /**
+   * @var \Drupal\Component\Plugin\PluginManagerInterface
+   */
+  protected $manager;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static($container->get('plugin.manager.key.key_type'));
+  }
+
+  function __construct(PluginManagerInterface $manager) {
+    $this->manager = $manager;
+  }
+
   /**
    * {@inheritdoc}
    */

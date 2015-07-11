@@ -63,14 +63,15 @@ class KeyTypeForm extends FormBase {
     else {
       $instance = $this->manager->createInstance($key_type_id, []);
     }
-    /** @var $instance \Drupal\key\KeyInterface */
+    /** @var $instance \Drupal\key\KeyTypeInterface */
     return $instance->buildConfigurationForm($form, $form_state);
 
-    if (isset($id)) {
+    /*
+    if (!empty($key_type_id['id'])) {
       // Conditionally set this form element so that we can update or add.
       $form['id'] = [
         '#type' => 'value',
-        '#value' => $id
+        '#value' => $key_type_id['id']
       ];
     }
     $form['instance'] = [
@@ -84,7 +85,7 @@ class KeyTypeForm extends FormBase {
         'callback' => [$this, 'ajaxSave'],
       ]
     ];
-    return $form;
+    return $form;*/
   }
 
   /**

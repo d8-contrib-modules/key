@@ -8,6 +8,7 @@
 namespace Drupal\key\Form;
 
 use Drupal\Component\Plugin\PluginManagerInterface;
+use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
@@ -74,7 +75,7 @@ class KeyForm extends EntityForm {
       '#options' => $key_types,
       '#ajax' => [
         'callback' => [$this, 'getKeyTypeForm'],
-        'event' => 'select',
+        'event' => 'change',
       ],
     );
 
@@ -118,7 +119,8 @@ class KeyForm extends EntityForm {
    */
   public function getKeyTypeForm(array &$form, FormStateInterface $form_state) {
     $key_type = $form_state->getValue('key_type');
-    $content = \Drupal::formBuilder()->getForm('\Drupal\key\Form\KeyTypeForm', $key_type, $this->machine_name);
+    //$content = \Drupal::formBuilder()->getForm('\Drupal\key\Form\KeyTypeForm', $key_type, $this->machine_name);
+    $content = \Drupal::formBuilder()->getForm('\Drupal\key\Form\KeyTypeForm', $key_type);
     $content['#attached']['library'][] = 'core/drupal.dialog.ajax';
     $response = new AjaxResponse();
     $response->addCommand(new ReplaceCommand('#key-type-form', $content));

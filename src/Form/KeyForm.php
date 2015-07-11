@@ -44,7 +44,7 @@ class KeyForm extends EntityForm {
     $form = parent::form($form, $form_state);
 
     $form['#attached']['library'][] = 'core/drupal.dialog.ajax';
-    $key_types = [];
+    $key_types = [''=>''];
     foreach ($this->manager->getDefinitions() as $plugin_id => $definition) {
       $key_types[$plugin_id] = (string) $definition['title'];
     }
@@ -70,6 +70,7 @@ class KeyForm extends EntityForm {
 
     $form['key_type'] = array(
       '#type' => 'select',
+      '#title' => $this->t('Key Type'),
       '#options' => $key_types,
       '#ajax' => [
         'callback' => [$this, 'getKeyTypeForm'],

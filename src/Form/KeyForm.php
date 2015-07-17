@@ -8,11 +8,9 @@
 namespace Drupal\key\Form;
 
 use Drupal\Component\Plugin\PluginManagerInterface;
-use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityForm;
+use Drupal\Core\Form\FormState;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Ajax\ReplaceCommand;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -45,12 +43,14 @@ class KeyForm extends EntityForm {
     $form = parent::form($form, $form_state);
 
     $form['#attached']['library'][] = 'core/drupal.dialog.ajax';
-    $key_types = [''=>''];
+    $key_types = [];
     foreach ($this->manager->getDefinitions() as $plugin_id => $definition) {
       $key_types[$plugin_id] = (string) $definition['title'];
     }
 
+    /** @var $key \Drupal\key\KeyInterface */
     $key = $this->entity;
+    $form['#tree'] = TRUE;
     $form['label'] = array(
       '#type' => 'textfield',
       '#title' => $this->t('Label'),
@@ -73,19 +73,26 @@ class KeyForm extends EntityForm {
       '#type' => 'select',
       '#title' => $this->t('Key Type'),
       '#options' => $key_types,
+      '#empty_option' => t('Select Key Type'),
+      '#empty_value' => 'none',
       '#ajax' => [
         'callback' => [$this, 'getKeyTypeForm'],
         'event' => 'change',
+        'wrapper' => 'key-type-form',
       ],
+      '#required' => TRUE,
+      '#default_value' => $key->getKeyType(),
     );
 
-    $form['key_type_form'] = array(
-      '#type' => 'container',
-      '#attributes' => array(
-        'id' => array('key-type-form')
-      ),
-    );
-
+    $form['key_settings'] = [
+      '#prefix' => '<div id="key-type-form">',
+      '#suffix' => '</div>',
+    ];
+    if ($this->manager->hasDefinition($key->getKeyType())) {
+      // @todo compare ids to ensure appropriate plugin values.
+      $plugin = $this->manager->createInstance($key->getKeyType(), $key->getKeySettings());
+      $form['key_settings'] += $plugin->buildConfigurationForm([], $form_state);
+    }
 
     return $form;
   }
@@ -93,21 +100,31 @@ class KeyForm extends EntityForm {
   /**
    * {@inheritdoc}
    */
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+    $plugin_settings = (new FormState())->setValues($form_state->getValue('key_settings'));
+    $plugin = $this->manager->createInstance($form_state->getValue('key_type'), []);
+    $plugin->submitConfigurationForm($form, $plugin_settings);
+    $form_state->setValue('key_settings', $plugin->getConfiguration());
+    parent::submitForm($form, $form_state);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function save(array $form, FormStateInterface $form_state) {
-    $key = $this->entity;
-    $status = $key->save();
+    $status = parent::save($form, $form_state);
 
     if ($status) {
       drupal_set_message($this->t('Saved the %label Key.', array(
-        '%label' => $key->label(),
+        '%label' => $this->entity->label(),
       )));
     }
     else {
       drupal_set_message($this->t('The %label Key was not saved.', array(
-        '%label' => $key->label(),
+        '%label' => $this->entity->label(),
       )));
     }
-    $form_state->setRedirectUrl($key->urlInfo('collection'));
+    $form_state->setRedirectUrl($this->entity->urlInfo('collection'));
   }
 
   /**
@@ -115,16 +132,10 @@ class KeyForm extends EntityForm {
    *
    * @param array $form
    * @param \Drupal\Core\Form\FormStateInterface $form_state
-   * @return \Drupal\key\Form\AjaxResponse
+   * @return array
    */
   public function getKeyTypeForm(array &$form, FormStateInterface $form_state) {
-    $key_type = $form_state->getValue('key_type');
-    //$content = \Drupal::formBuilder()->getForm('\Drupal\key\Form\KeyTypeForm', $key_type, $this->machine_name);
-    $content = \Drupal::formBuilder()->getForm('\Drupal\key\Form\KeyTypeForm', $key_type);
-    $content['#attached']['library'][] = 'core/drupal.dialog.ajax';
-    $response = new AjaxResponse();
-    $response->addCommand(new ReplaceCommand('#key-type-form', $content));
-    return $response;
+    return $form['key_settings'];
   }
 
 }

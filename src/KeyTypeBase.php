@@ -25,20 +25,6 @@ abstract class KeyTypeBase extends PluginBase implements KeyTypeInterface {
   /**
    * {@inheritdoc}
    */
-  public function getTitle() {
-    return $this->pluginDefinition['title'];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getDescription() {
-    return $this->pluginDefinition['description'];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function validateConfigurationForm(array &$form, FormStateInterface $form_state) {}
 
   /**

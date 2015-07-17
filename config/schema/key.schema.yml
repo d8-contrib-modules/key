@@ -10,14 +10,28 @@ key.key.*:
       label: 'Label'
     uuid:
       type: string
-    policy_constraints:
+    key_type:
+      type: string
+      label: Key Type
+    key_settings:
       type: key.key_type.plugin.[id]
-      label: 'Key Type'
+      label: 'Key Settings'
 
-key.key_type.plugin:
+key_type:
   type: mapping
   label: 'Key type settings'
   mapping:
     id:
       type: string
       label: 'ID'
+
+key.key_type.plugin.*:
+  type: key_type
+
+key.key_type.plugin.key_type_simple:
+  type: key_type
+  label: 'Simple Key'
+  mapping:
+    simple_key_value:
+      type: string
+      label: 'Key Value'

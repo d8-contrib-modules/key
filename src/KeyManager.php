@@ -11,6 +11,15 @@ namespace Drupal\key;
  * Responsible for the key service.
  */
 class KeyManager {
+  /*
+   * Loading a specific key.
+   *
+   * @param string $key_id
+   *   The key ID to use.
+   */
+  public function getKeys() {
+    return \Drupal::getStorage('key')->loadMultiple();
+  }
 
   /*
    * Loading a specific key.

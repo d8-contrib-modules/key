@@ -18,7 +18,7 @@ class KeyManager {
    *   The key ID to use.
    */
   public function getKeys() {
-    return \Drupal::getStorage('key')->loadMultiple();
+    return \Drupal::entityManager()->getStorage('key')->loadMultiple();
   }
 
   /*
@@ -28,7 +28,7 @@ class KeyManager {
    *   The key ID to use.
    */
   public function getKey($key_id) {
-    return \Drupal::getStorage('key')->load($key_id);
+    return \Drupal::entityManager()->getStorage('key')->load($key_id);
   }
 
   /*
@@ -38,7 +38,7 @@ class KeyManager {
    *   The key ID to use.
    */
   public function getKeyContents($key_id) {
-    return \Drupal::getStorage('key')->load($key_id)->getContents();
+    return \Drupal::entityManager()->getStorage('key')->load($key_id)->getContents();
   }
 
   /*
@@ -47,7 +47,7 @@ class KeyManager {
   public function getDefaultKey() {
     $key_id = \Drupal::config('key.default_config')->get('default_key');
     if ($key_id) {
-      return \Drupal::getStorage('key')->load($key_id);
+      return \Drupal::entityManager()->getStorage('key')->load($key_id);
     }
     return NULL;
   }
@@ -58,7 +58,7 @@ class KeyManager {
   public function getDefaultKeyContents() {
     $key_id = \Drupal::config('key.default_config')->get('default_key');
     if ($key_id) {
-      $key = \Drupal::getStorage('key')->load($key_id);
+      $key = \Drupal::entityManager()->getStorage('key')->load($key_id);
       return $key->getContents();
     }
     return NULL;

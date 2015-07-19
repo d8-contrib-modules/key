@@ -37,8 +37,8 @@ class KeyManager {
    * @param string $key_id
    *   The key ID to use.
    */
-  public function getKeyContents($key_id) {
-    return \Drupal::entityManager()->getStorage('key')->load($key_id)->getContents();
+  public function getKeyValue($key_id) {
+    return \Drupal::entityManager()->getStorage('key')->load($key_id)->getKeyValue();
   }
 
   /*

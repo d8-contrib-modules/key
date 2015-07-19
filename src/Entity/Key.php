@@ -65,4 +65,16 @@ class Key extends ConfigEntityBase implements KeyInterface {
     return $this->key_settings;
   }
 
+  /*
+   * Returns key contents.
+   */
+  public function getKeyValue(){
+    // Create instance of the plugin.
+    $plugin = \Drupal::service('plugin.manager.key.key_type');
+    $key_type = $plugin->createInstance($this->key_settings['id'], $this->key_type);
+
+    // Return it's key contents.
+    return $key_type->getKeyValue();
+  }
+
 }

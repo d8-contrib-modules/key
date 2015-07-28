@@ -74,11 +74,27 @@ class KeyTestBase extends UnitTestCase {
       ->with('key')
       ->willReturn($this->configStorage);
 
+    // Mock the KeyTypePluginManager service.
+    $this->keyTypeManager = $this->getMockBuilder('\Drupal\key\KeyTypePluginManager')
+      ->disableOriginalConstructor()
+      ->getMock();
+
     // Create a dummy container.
     $this->container = new ContainerBuilder();
     $this->container->set('entity.manager', $this->entityManager);
     $this->container->set('config.factory', $this->configFactory);
+    $this->container->set('plugin.manager.key.key_type', $this->keyTypeManager);
     \Drupal::setContainer($this->container);
+  }
+
+  /**
+   * Return a token that could be a key.
+   *
+   * @return string
+   *   A hashed string that could be confused as some secret token.
+   */
+  protected function createToken() {
+    return strtoupper(hash('ripemd128', md5($this->getRandomGenerator()->string(30))));
   }
 
 }

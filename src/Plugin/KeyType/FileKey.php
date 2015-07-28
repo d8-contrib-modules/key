@@ -66,6 +66,7 @@ class FileKey extends KeyTypeBase {
   public function validateConfigurationForm(array &$form, FormStateInterface $form_state) {
     $file = $form_state->getValue('file_key_location');
 
+    // Does the file exist and is it readable?
     if (!is_file($file) || !is_readable($file)) {
       $form_state->setErrorByName('file_key_location', $this->t('File does not exist or is not readable.'));
     }

@@ -117,7 +117,10 @@ class KeyForm extends EntityForm {
       $plugin_settings = (new FormState())->setValues($form_state->getValue('key_settings'));
       $plugin = $this->manager->createInstance($form_state->getValue('key_type'), []);
       $plugin->validateConfigurationForm($form, $plugin_settings);
-      // TODO Need to reinject errors from $plugin into $form_state
+      // Reinject errors from $plugin_settings into $form_state
+      foreach ($plugin_settings->getErrors() as $field => $error) {
+        $form_state->setErrorByName($field, $error);
+      }
     }
     parent::validateForm($form, $form_state);
   }

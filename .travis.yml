@@ -1,0 +1,21 @@
+language: php
+
+php:
+  - 5.5
+  - 5.6
+
+sudo: false
+
+install:
+  # Download Drupal.
+  - TESTDIR=$(pwd)
+  - cd ..
+  - git clone --branch 8.0.x --depth 1 http://git.drupal.org/project/drupal.git drupal
+  - cd drupal
+
+before_script:
+  # rsync the module directory into modules/
+  - rsync -rtlDPvc --exclude .git/ $TESTDIR modules/
+  - cd modules/key
+script:
+  - ../../core/vendor/bin/phpunit --coverage-text

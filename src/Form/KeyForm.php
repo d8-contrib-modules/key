@@ -113,7 +113,7 @@ class KeyForm extends EntityForm {
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     // Only run key settings validation if the form is being submitted
-    if($form_state->isSubmitted()) {
+    if ($form_state->isSubmitted()) {
       $plugin_settings = (new FormState())->setValues($form_state->getValue('key_settings'));
       $plugin = $this->manager->createInstance($form_state->getValue('key_type'), []);
       $plugin->validateConfigurationForm($form, $plugin_settings);

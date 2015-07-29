@@ -29,6 +29,8 @@ class KeyManagerTest extends KeyTestBase {
 
   /**
    * Test load by multiple key ids.
+   *
+   * @group key
    */
   public function testGetKeys() {
     $key_id2 = $this->getRandomGenerator()->word(15);
@@ -45,6 +47,8 @@ class KeyManagerTest extends KeyTestBase {
 
   /**
    * Test load by key id.
+   *
+   * @group key
    */
   public function testGetKey() {
     $key = $this->keyManager->getKey($this->key_id);
@@ -54,6 +58,8 @@ class KeyManagerTest extends KeyTestBase {
 
   /**
    * Test get key value.
+   *
+   * @group key
    */
   public function testGetKeyValue() {
     // Create a key type plugin to play with.
@@ -79,6 +85,8 @@ class KeyManagerTest extends KeyTestBase {
 
   /**
    * Test loading of default key entity.
+   *
+   * @group key
    */
   public function testGetDefaultKey() {
     // On the first run, config storage will return NULL.
@@ -93,6 +101,8 @@ class KeyManagerTest extends KeyTestBase {
 
   /**
    * Test load of defaul key content.
+   *
+   * @group key
    *
    * @todo There is no Key::getContents() method so this will return an error.
    */

@@ -7,10 +7,27 @@
 
 namespace Drupal\key;
 
+use Drupal\Core\Entity\EntityManagerInterface;
+use Drupal\Core\Config\ConfigFactoryInterface;
+
 /**
  * Responsible for the key service.
  */
 class KeyManager {
+
+  /**
+   * Create the KeyManager.
+   *
+   * @param \Drupal\Core\Entity\EntityManagerInterface $entityManager
+   *   The entity manager.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
+   *   The config factory.
+   */
+  public function __construct(EntityManagerInterface $entityManager, ConfigFactoryInterface $configFactory) {
+    $this->entityManager = $entityManager;
+    $this->configFactory = $configFactory;
+  }
+
   /*
    * Loading a specific key.
    *
@@ -18,7 +35,7 @@ class KeyManager {
    *   The key ID to use.
    */
   public function getKeys() {
-    return \Drupal::entityManager()->getStorage('key')->loadMultiple();
+    return $this->entityManager->getStorage('key')->loadMultiple();
   }
 
   /*
@@ -28,7 +45,7 @@ class KeyManager {
    *   The key ID to use.
    */
   public function getKey($key_id) {
-    return \Drupal::entityManager()->getStorage('key')->load($key_id);
+    return $this->entityManager->getStorage('key')->load($key_id);
   }
 
   /*
@@ -38,16 +55,16 @@ class KeyManager {
    *   The key ID to use.
    */
   public function getKeyValue($key_id) {
-    return \Drupal::entityManager()->getStorage('key')->load($key_id)->getKeyValue();
+    return $this->entityManager->getStorage('key')->load($key_id)->getKeyValue();
   }
 
   /*
    * Loading the configured default key.
    */
   public function getDefaultKey() {
-    $key_id = \Drupal::config('key.default_config')->get('default_key');
+    $key_id = $this->configFactory->get('key.default_config')->get('default_key');
     if ($key_id) {
-      return \Drupal::entityManager()->getStorage('key')->load($key_id);
+      return $this->entityManager->getStorage('key')->load($key_id);
     }
     return NULL;
   }

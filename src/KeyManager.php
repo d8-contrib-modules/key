@@ -73,10 +73,10 @@ class KeyManager {
    * Loading the key contents for the configured default key.
    */
   public function getDefaultKeyContents() {
-    $key_id = \Drupal::config('key.default_config')->get('default_key');
+    $key_id = $this->configFactory->get('key.default_config')->get('default_key');
     if ($key_id) {
-      $key = \Drupal::entityManager()->getStorage('key')->load($key_id);
-      return $key->getContents();
+      $key = $this->entityManager->getStorage('key')->load($key_id);
+      return $key->getKeyValue();
     }
     return NULL;
   }

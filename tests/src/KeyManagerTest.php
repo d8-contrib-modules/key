@@ -103,14 +103,31 @@ class KeyManagerTest extends KeyTestBase {
    * Test load of defaul key content.
    *
    * @group key
-   *
-   * @todo There is no Key::getContents() method so this will return an error.
    */
   public function testGetDefaultKeyContent() {
+    // On the first run, config storage will return NULL.
+    $settings = $this->keyManager->getDefaultKeyContents();
+    $this->assertEquals(NULL, $settings);
 
-    $content = $this->keyManager->getDefaultKeyContents();
+    // Create a key type plugin to play with.
+    $defaults = ['simple_key_value' => $this->createToken()];
+    $definition = [
+      'id' => 'key_type_Simple',
+      'class' => 'Drupal\key\Plugin\KeyType\SimpleKey',
+      'title' => 'Simple Key',
+    ];
+    $keyType = new SimpleKey($defaults, 'key_type_simple', $definition);
 
-    $this->assertTrue(isset($content));
+    // Make the key type plugin manager return a plugin instance.
+    $this->keyTypeManager->expects($this->any())
+      ->method('createInstance')
+      ->with('key_type_simple', $defaults)
+      ->willReturn($keyType);
+
+    $this->key->set('key_settings', $defaults);
+
+    $settings = $this->keyManager->getDefaultKeyContents();
+    $this->assertEquals($defaults['simple_key_value'], $settings);
   }
 
   /**

@@ -74,17 +74,14 @@ class KeyTestBase extends UnitTestCase {
       ->with('key')
       ->willReturn($this->configStorage);
 
-    // Mock the KeyTypePluginManager service.
-    $this->keyTypeManager = $this->getMockBuilder('\Drupal\key\KeyTypePluginManager')
-      ->disableOriginalConstructor()
-      ->getMock();
-
     // Create a dummy container.
     $this->container = new ContainerBuilder();
     $this->container->set('entity.manager', $this->entityManager);
     $this->container->set('config.factory', $this->configFactory);
-    $this->container->set('plugin.manager.key.key_type', $this->keyTypeManager);
-    \Drupal::setContainer($this->container);
+
+    // Each test class should call \Drupal::setContainer() in its own setUp
+    // method so that test classes can add mocked services to the container
+    // without affecting other test classes.
   }
 
   /**

@@ -1,5 +1,7 @@
 # Key Module for Drupal 8
 
+[![Build Status](https://travis-ci.org/d8-contrib-modules/key.svg?branch=master)](https://travis-ci.org/d8-contrib-modules/key)
+
 This module provides a global key management service that can be invoked via the services interface.
 
 ## Architecture

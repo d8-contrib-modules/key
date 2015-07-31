@@ -50,6 +50,30 @@ class KeyService extends WebTestBase {
     $this->verbose('Key Value: ' . $key_value_string);
 
     $this->assertEqual($key_value_string, $test_string, 'The getKeyValue function is not properly processing');
+
+    // Test getKeysByType service.
+    $keys = \Drupal::service('key_manager')->getKeysByType('key_type_simple');
+    $this->assertEqual(count($keys), '1', 'The getKeysByType function is not returning 1 simple key');
+
+    // Create another simple key.
+    $test_string = 'testing 12345678 (837#';
+    $this->drupalGet('admin/config/system/key/add');
+    $edit = [
+      'key_type' => 'key_type_simple',
+    ];
+    $this->drupalPostAjaxForm(NULL, $edit, 'key_type');
+
+    $edit = [
+      'id' => 'testing_key2',
+      'label' => 'Testing Key 2',
+      'key_type' => 'key_type_simple',
+      'key_settings[simple_key_value]' => $test_string,
+    ];
+    $this->drupalPostForm(NULL, $edit, t('Save'));
+
+    // Test getKeysByType service.
+    $keys = \Drupal::service('key_manager')->getKeysByType('key_type_simple');
+    $this->assertEqual(count($keys), '2', 'The getKeysByType function is not returning 2 simple keys');
   }
 
   /**
@@ -85,6 +109,31 @@ class KeyService extends WebTestBase {
     $this->verbose('Key Value: ' . $key_value_string);
 
     $this->assertEqual($key_value_string, $contents, 'The getKeyValue function is not properly processing');
+
+    // Test getKeysByStorageMethod service.
+    $keys = \Drupal::service('key_manager')->getKeysByStorageMethod('file');
+    $this->assertEqual(count($keys), '1', 'The getKeysByStorageMethod function is not returning 1 file key');
+
+    // Create a second new file key.
+    $this->drupalGet('admin/config/system/key/add');
+    $edit = [
+      'key_type' => 'key_type_file',
+    ];
+    $this->drupalPostAjaxForm(NULL, $edit, 'key_type');
+
+    $edit = [
+      'id' => 'testing_key_file2',
+      'label' => 'Testing Key File2',
+      'key_type' => 'key_type_file',
+      'key_settings[file_key_location]' => $rpath,
+      'key_settings[file_key_method]' => 'file_contents',
+    ];
+    $this->drupalPostForm(NULL, $edit, t('Save'));
+
+    // Test getKeysByStorageMethod service.
+    $keys = \Drupal::service('key_manager')->getKeysByStorageMethod('file');
+    $this->assertEqual(count($keys), '2', 'The getKeysByStorageMethod function is not returning 2 file keys');
+
   }
 
 }

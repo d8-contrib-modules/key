@@ -7,6 +7,7 @@
 
 namespace Drupal\key;
 
+use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Core\Entity\EntityManagerInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 
@@ -22,10 +23,13 @@ class KeyManager {
    *   The entity manager.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   The config factory.
+   * @param \Drupal\Component\Plugin\PluginManagerInterface $pluginManager
+   *   The plugin manager.
    */
-  public function __construct(EntityManagerInterface $entityManager, ConfigFactoryInterface $configFactory) {
+  public function __construct(EntityManagerInterface $entityManager, ConfigFactoryInterface $configFactory, PluginManagerInterface $pluginManager) {
     $this->entityManager = $entityManager;
     $this->configFactory = $configFactory;
+    $this->pluginManager = $pluginManager;
   }
 
   /*
@@ -52,9 +56,15 @@ class KeyManager {
    *   The storage method of the key type.
    */
   public function getKeysByStorageMethod($storage_method) {
-    return array_filter($this->entityManager->getDefinitions(), function ($definition) use ($storage_method) {
+    $key_types = array_filter($this->pluginManager->getDefinitions(), function ($definition) use ($storage_method) {
       return $definition['storage_method'] == $storage_method;
     });
+
+    $keys = [];
+    foreach ($key_types as $key_type_id => $key_type) {
+      $keys = array_merge($keys, $this->getKeysByType($key_type_id));
+    }
+    return $keys;
   }
 
   /*

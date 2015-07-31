@@ -44,7 +44,7 @@ class KeyType extends Plugin {
   /**
    * The storage method of the key type.
    *
-   * This is an enumeration of {file, config, database, upload}
+   * This is an enumeration of {file, config, database, remote}
    *
    * @var string
    */

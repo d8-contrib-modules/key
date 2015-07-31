@@ -50,7 +50,9 @@ class KeyManager {
   }
 
   /*
-   * Loading keys that are of the specified key type.
+   * Loading keys that are of the specified storage method.
+   *
+   * Storage method is an annotation of a key's key type.
    *
    * @param string $storage_method
    *   The storage method of the key type.

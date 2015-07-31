@@ -41,4 +41,13 @@ class KeyType extends Plugin {
    */
   public $description;
 
+  /**
+   * The storage method of the key type.
+   *
+   * This is an enumeration of {file, config, database, remote}
+   *
+   * @var string
+   */
+  public $storage_method;
+
 }

@@ -7,6 +7,7 @@
 
 namespace Drupal\key;
 
+use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Core\Entity\EntityManagerInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 
@@ -22,20 +23,50 @@ class KeyManager {
    *   The entity manager.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   The config factory.
+   * @param \Drupal\Component\Plugin\PluginManagerInterface $pluginManager
+   *   The plugin manager.
    */
-  public function __construct(EntityManagerInterface $entityManager, ConfigFactoryInterface $configFactory) {
+  public function __construct(EntityManagerInterface $entityManager, ConfigFactoryInterface $configFactory, PluginManagerInterface $pluginManager) {
     $this->entityManager = $entityManager;
     $this->configFactory = $configFactory;
+    $this->pluginManager = $pluginManager;
   }
 
   /*
-   * Loading a specific key.
-   *
-   * @param string $key_id
-   *   The key ID to use.
+   * Loading all keys.
    */
   public function getKeys() {
     return $this->entityManager->getStorage('key')->loadMultiple();
+  }
+
+  /*
+   * Loading keys that are of the specified key type.
+   *
+   * @param string $key_type
+   *   The key type ID to use.
+   */
+  public function getKeysByType($key_type_id) {
+    return $this->entityManager->getStorage('key')->loadByProperties(array('key_type' => $key_type_id));
+  }
+
+  /*
+   * Loading keys that are of the specified storage method.
+   *
+   * Storage method is an annotation of a key's key type.
+   *
+   * @param string $storage_method
+   *   The storage method of the key type.
+   */
+  public function getKeysByStorageMethod($storage_method) {
+    $key_types = array_filter($this->pluginManager->getDefinitions(), function ($definition) use ($storage_method) {
+      return $definition['storage_method'] == $storage_method;
+    });
+
+    $keys = [];
+    foreach ($key_types as $key_type_id => $key_type) {
+      $keys = array_merge($keys, $this->getKeysByType($key_type_id));
+    }
+    return $keys;
   }
 
   /*

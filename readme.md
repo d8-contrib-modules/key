@@ -16,6 +16,16 @@ key type settings, and the logic for retrieving the key value.
 
 To manage keys, visit `admin/config/system/key`.
 
+Plugins register themselves to the Key Plugin Manager. One important feature, built as an annotation, is the Storage
+Method for the plugin. Each plugin needs to register the type of storage used within the plugin. 
+
+For convention, we recommend using the following storage method values within your annotation.
+
+1. File - Stored in files, private filesystem or path-based files
+1. Configuration - Stored with Drupal's built in configuration management (settings, entities)
+1. Database - Stored as content within the database
+1. Remote - Stored offsite and integrated through a web service API
+
 ## Use of Services
 
 After configuring the service, the service provides the ability to encrypt and decrypt.

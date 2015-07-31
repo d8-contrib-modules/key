@@ -35,3 +35,14 @@ key.key_type.plugin.key_type_simple:
     simple_key_value:
       type: string
       label: 'Key Value'
+
+key.key_type.plugin.key_type_file:
+  type: key_type
+  label: 'Simple Key'
+  mapping:
+    file_key_location:
+      type: string
+      label: 'File Location'
+    file_key_method:
+      type: string
+      label: 'Key Method'

@@ -34,9 +34,15 @@ class KeyManager {
 
   /*
    * Loading all keys.
+   *
+   * @param array $key_ids
+   *   (optional) An array of entity IDs, or NULL to load all entities.
+   * @return \Drupal\key\Entity\Key[]
+   *   An array of keys indexed by their IDs. Returns an empty array if no
+   *   matching entities are found.
    */
-  public function getKeys() {
-    return $this->entityManager->getStorage('key')->loadMultiple();
+  public function getKeys(array $key_ids = NULL) {
+    return $this->entityManager->getStorage('key')->loadMultiple($key_ids);
   }
 
   /*
@@ -63,8 +69,8 @@ class KeyManager {
     });
 
     $keys = [];
-    foreach ($key_types as $key_type_id => $key_type) {
-      $keys = array_merge($keys, $this->getKeysByType($key_type_id));
+    foreach ($key_types as $key_type) {
+      $keys = array_merge($keys, $this->getKeysByType($key_type['id']));
     }
     return $keys;
   }

@@ -45,21 +45,41 @@ class KeyManagerTest extends KeyTestBase {
   }
 
   /**
-   * Test load by multiple key ids.
-   *
-   * @group key
+   * Provide data values for testGetKeys().
    */
-  public function testGetKeys() {
+  public function getKeysProvider() {
+    $key_id1 = $this->getRandomGenerator()->word(15);
+    $key1 = new Key(['key_id' => $key_id1], 'key');
     $key_id2 = $this->getRandomGenerator()->word(15);
     $key2 = new Key(['key_id' => $key_id2], 'key');
 
-    $this->entityManager->expects($this->any())
-      ->method('loadMultiple')
-      ->with([$this->key_id, $key_id2])
-      ->willReturn([$this->key_id => $this->key, $key_id2 => $key2]);
+    // This mocks the return value for loadMultiple in scenarios of an array of
+    // 1 key, 2 keys, and no keys.
+    return [
+      [[$key_id1], [$key_id1 => $key1]],
+      [[$key_id1, $key_id2], [$key_id1 => $key1, $key_id2 => $key2]],
+      [[], [$key_id1 => $key1, $key_id2 => $key2]]
+    ];
+  }
 
-    $keys = $this->keyManager->getKeys([$this->key_id, $key_id2]);
-    $this->assertEquals(2, count($keys));
+  /**
+   * Test load by multiple key ids.
+   *
+   * @group key
+   * @dataProvider getKeysProvider
+   */
+  public function testGetKeys(array $key_ids, array $keys) {
+    // Mock the loadMultiple to return results per the behavior documented in
+    // \Drupal\Core\Entity\EntityStorageBase::loadMultiple().
+    $this->configStorage->expects($this->any())
+      ->method('loadMultiple')
+      ->with($key_ids)
+      ->willReturn($keys);
+
+    // Assert that the array count is the same for the scenario provided by the
+    // data provider above.
+    $entities = $this->keyManager->getKeys($key_ids);
+    $this->assertEquals(count($keys), count($entities));
   }
 
   /**
@@ -152,10 +172,16 @@ class KeyManagerTest extends KeyTestBase {
       ->with('key_type_simple', $defaults)
       ->willReturn($keyType);
 
+    // Mock the loadByProperties method in entity manager.
+    $this->configStorage->expects($this->any())
+      ->method('loadByProperties')
+      ->with(['key_type' => 'key_type_simple'])
+      ->willReturn([$this->key_id => $this->key]);
+
     $this->key->set('key_settings', $defaults);
 
-    $settings = $this->keyManager->getKeysByType('key_type_simple');
-    $this->assertEquals([$keyType], $settings);
+    $keys = $this->keyManager->getKeysByType('key_type_simple');
+    $this->assertEquals($this->key, $keys[$this->key_id]);
   }
 
   /**
@@ -173,6 +199,12 @@ class KeyManagerTest extends KeyTestBase {
     ];
     $keyType = new SimpleKey($defaults, 'key_type_simple', $definition);
 
+    // Mock the loadByProperties method in entity manager.
+    $this->configStorage->expects($this->any())
+      ->method('loadByProperties')
+      ->with(['key_type' => 'key_type_simple'])
+      ->willReturn([$this->key_id => $this->key]);
+
     // Make the key type plugin manager return a plugin instance.
     $this->keyTypeManager->expects($this->any())
       ->method('createInstance')
@@ -181,8 +213,8 @@ class KeyManagerTest extends KeyTestBase {
 
     $this->key->set('key_settings', $defaults);
 
-    $settings = $this->keyManager->getKeysByStorageMethod('config');
-    $this->assertEquals([$keyType], $settings);
+    $keys = $this->keyManager->getKeysByStorageMethod('config');
+    $this->assertEquals([$this->key_id => $this->key], $keys);
   }
 
   /**
@@ -210,6 +242,21 @@ class KeyManagerTest extends KeyTestBase {
       ->method('load')
       ->with($this->key_id)
       ->willReturn($this->key);
+
+    // Mock the KeyTypePluginManager service.
+    $this->keyTypeManager = $this->getMockBuilder('\Drupal\key\KeyTypePluginManager')
+      ->disableOriginalConstructor()
+      ->getMock();
+
+    $this->keyTypeManager->expects($this->any())
+      ->method('getDefinitions')
+      ->willReturn([
+        ['id' => 'key_type_file', 'title' => 'File Key', 'storage_method' => 'file'],
+        ['id' => 'key_type_simple', 'title' => 'Simple Key', 'storage_method' => 'config']
+      ]);
+
+    $this->container->set('plugin.manager.key.key_type', $this->keyTypeManager);
+    \Drupal::setContainer($this->container);
 
     // Create a new key manager object.
     $this->keyManager = new KeyManager($this->entityManager, $this->configFactory, $this->keyTypeManager);

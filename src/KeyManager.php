@@ -29,13 +29,32 @@ class KeyManager {
   }
 
   /*
-   * Loading a specific key.
-   *
-   * @param string $key_id
-   *   The key ID to use.
+   * Loading all keys.
    */
   public function getKeys() {
     return $this->entityManager->getStorage('key')->loadMultiple();
+  }
+
+  /*
+   * Loading keys that are of the specified key type.
+   *
+   * @param string $key_type
+   *   The key type ID to use.
+   */
+  public function getKeysByType($key_type_id) {
+    return $this->entityManager->getStorage('key')->loadByProperties(array('key_type' => $key_type_id));
+  }
+
+  /*
+   * Loading keys that are of the specified key type.
+   *
+   * @param string $storage_method
+   *   The storage method of the key type.
+   */
+  public function getKeysByStorageMethod($storage_method) {
+    return array_filter($this->entityManager->getDefinitions(), function ($definition) use ($storage_method) {
+      return $definition['storage_method'] == $storage_method;
+    });
   }
 
   /*

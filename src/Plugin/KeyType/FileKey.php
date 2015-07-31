@@ -18,6 +18,7 @@ use Drupal\key\KeyTypeBase;
  *   id = "key_type_file",
  *   title = @Translation("File Key"),
  *   description = @Translation("This key type is stored within a file in the filesystem."),
+ *   storage_method = "file",
  * )
  */
 class FileKey extends KeyTypeBase {

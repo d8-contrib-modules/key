@@ -18,6 +18,7 @@ use Drupal\key\KeyTypeBase;
  *   id = "key_type_simple",
  *   title = @Translation("Simple Key"),
  *   description = @Translation("This key type is stored within the Drupal database."),
+ *   storage_method = config,
  * )
  */
 class SimpleKey extends KeyTypeBase {

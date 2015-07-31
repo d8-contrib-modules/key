@@ -114,6 +114,60 @@ class KeyManagerTest extends KeyTestBase {
   }
 
   /**
+   * Test get keys by type.
+   *
+   * @group key
+   */
+  public function testGetKeysByType() {
+    // Create a key type plugin to play with.
+    $defaults = ['simple_key_value' => $this->createToken()];
+    $definition = [
+      'id' => 'key_type_Simple',
+      'class' => 'Drupal\key\Plugin\KeyType\SimpleKey',
+      'title' => 'Simple Key',
+    ];
+    $keyType = new SimpleKey($defaults, 'key_type_simple', $definition);
+
+    // Make the key type plugin manager return a plugin instance.
+    $this->keyTypeManager->expects($this->any())
+      ->method('createInstance')
+      ->with('key_type_simple', $defaults)
+      ->willReturn($keyType);
+
+    $this->key->set('key_settings', $defaults);
+
+    $settings = $this->keyManager->getKeysByType('key_type_simple');
+    $this->assertEquals([$keyType], $settings);
+  }
+
+  /**
+   * Test get keys by storage method.
+   *
+   * @group key
+   */
+  public function testGetKeysByStorageMethod() {
+    // Create a key type plugin to play with.
+    $defaults = ['simple_key_value' => $this->createToken()];
+    $definition = [
+      'id' => 'key_type_Simple',
+      'class' => 'Drupal\key\Plugin\KeyType\SimpleKey',
+      'title' => 'Simple Key',
+    ];
+    $keyType = new SimpleKey($defaults, 'key_type_simple', $definition);
+
+    // Make the key type plugin manager return a plugin instance.
+    $this->keyTypeManager->expects($this->any())
+      ->method('createInstance')
+      ->with('key_type_simple', $defaults)
+      ->willReturn($keyType);
+
+    $this->key->set('key_settings', $defaults);
+
+    $settings = $this->keyManager->getKeysByStorageMethod('config');
+    $this->assertEquals([$keyType], $settings);
+  }
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp() {

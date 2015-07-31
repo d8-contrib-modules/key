@@ -140,7 +140,7 @@ class KeyManagerTest extends KeyTestBase {
       ->willReturn($this->key);
 
     // Create a new key manager object.
-    $this->keyManager = new KeyManager($this->entityManager, $this->configFactory);
+    $this->keyManager = new KeyManager($this->entityManager, $this->configFactory, $this->keyManager);
   }
 
 }

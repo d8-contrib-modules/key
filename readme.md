@@ -6,11 +6,11 @@ This module provides a global key management service that can be invoked via the
 
 ## Architecture
 
-Key leverages the Drupal 8 Plugin API for Key Types. Key Types define an interface to get key contents. Key Types have
-their own configuration forms that store key-type specific settings when creating a Key entity.
+Key leverages the Drupal 8 Plugin API for Key Providers. Key Providers define an interface to get key contents. Key Providers have
+their own configuration forms that store settings specific to that Key Provider when creating a Key entity.
 
-Plugins allow for extensibility for customized needs. This allows other modules to create their own types of keys, the
-key type settings, and the logic for retrieving the key value.
+Plugins allow for extensibility for customized needs. This allows other modules to create their own key providers, the
+key provider settings, and the logic for retrieving the key value.
 
 ## Settings
 

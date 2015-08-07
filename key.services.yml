@@ -2,8 +2,8 @@ services:
 
   key_manager:
     class: Drupal\key\KeyManager
-    arguments: ['@entity.manager', '@config.factory', '@plugin.manager.key.key_type']
+    arguments: ['@entity.manager', '@config.factory', '@plugin.manager.key.key_provider']
 
-  plugin.manager.key.key_type:
-    class: Drupal\key\KeyTypePluginManager
+  plugin.manager.key.key_provider:
+    class: Drupal\key\KeyProviderPluginManager
     parent: default_plugin_manager

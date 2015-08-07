@@ -2,26 +2,26 @@
 
 /**
  * @file
- * Contains Drupal\key\KeyType\SimpleKey.
+ * Contains Drupal\key\KeyProvider\SimpleKey.
  */
 
 
-namespace Drupal\key\Plugin\KeyType;
+namespace Drupal\key\Plugin\KeyProvider;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\key\KeyTypeBase;
+use Drupal\key\KeyProviderBase;
 
 /**
  * Enforces a number of a type of character in passwords.
  *
- * @KeyType(
- *   id = "key_type_simple",
+ * @KeyProvider(
+ *   id = "key_provider_simple",
  *   title = @Translation("Simple Key"),
- *   description = @Translation("This key type is stored within the Drupal database."),
+ *   description = @Translation("This key provider is stored within the Drupal database."),
  *   storage_method = "config",
  * )
  */
-class SimpleKey extends KeyTypeBase {
+class SimpleKey extends KeyProviderBase {
 
   /**
    * {@inheritdoc}

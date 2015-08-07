@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains Drupal\key\Annotation\KeyType.
+ * Contains Drupal\key\Annotation\KeyProvider.
  */
 
 namespace Drupal\key\Annotation;
@@ -10,11 +10,11 @@ namespace Drupal\key\Annotation;
 use Drupal\Component\Annotation\Plugin;
 
 /**
- * Defines a key type annotation object.
+ * Defines a key provider annotation object.
  *
  * @Annotation
  */
-class KeyType extends Plugin {
+class KeyProvider extends Plugin {
 
   /**
    * The plugin ID.
@@ -42,7 +42,7 @@ class KeyType extends Plugin {
   public $description;
 
   /**
-   * The storage method of the key type.
+   * The storage method of the key provider.
    *
    * This is an enumeration of {file, config, database, remote}
    *

@@ -31,14 +31,14 @@ class KeyService extends WebTestBase {
     $test_string = 'testing 123 &*#';
     $this->drupalGet('admin/config/system/key/add');
     $edit = [
-      'key_type' => 'key_type_simple',
+      'key_provider' => 'key_provider_simple',
     ];
-    $this->drupalPostAjaxForm(NULL, $edit, 'key_type');
+    $this->drupalPostAjaxForm(NULL, $edit, 'key_provider');
 
     $edit = [
       'id' => 'testing_key',
       'label' => 'Testing Key',
-      'key_type' => 'key_type_simple',
+      'key_provider' => 'key_provider_simple',
       'key_settings[simple_key_value]' => $test_string,
     ];
     $this->drupalPostForm(NULL, $edit, t('Save'));
@@ -51,29 +51,29 @@ class KeyService extends WebTestBase {
 
     $this->assertEqual($key_value_string, $test_string, 'The getKeyValue function is not properly processing');
 
-    // Test getKeysByType service.
-    $keys = \Drupal::service('key_manager')->getKeysByType('key_type_simple');
-    $this->assertEqual(count($keys), '1', 'The getKeysByType function is not returning 1 simple key');
+    // Test getKeysByProvider service.
+    $keys = \Drupal::service('key_manager')->getKeysByProvider('key_provider_simple');
+    $this->assertEqual(count($keys), '1', 'The getKeysByProvider function is not returning 1 simple key');
 
     // Create another simple key.
     $test_string = 'testing 12345678 (837#';
     $this->drupalGet('admin/config/system/key/add');
     $edit = [
-      'key_type' => 'key_type_simple',
+      'key_provider' => 'key_provider_simple',
     ];
-    $this->drupalPostAjaxForm(NULL, $edit, 'key_type');
+    $this->drupalPostAjaxForm(NULL, $edit, 'key_provider');
 
     $edit = [
       'id' => 'testing_key2',
       'label' => 'Testing Key 2',
-      'key_type' => 'key_type_simple',
+      'key_provider' => 'key_provider_simple',
       'key_settings[simple_key_value]' => $test_string,
     ];
     $this->drupalPostForm(NULL, $edit, t('Save'));
 
-    // Test getKeysByType service.
-    $keys = \Drupal::service('key_manager')->getKeysByType('key_type_simple');
-    $this->assertEqual(count($keys), '2', 'The getKeysByType function is not returning 2 simple keys');
+    // Test getKeysByProvider service.
+    $keys = \Drupal::service('key_manager')->getKeysByProvider('key_provider_simple');
+    $this->assertEqual(count($keys), '2', 'The getKeysByProvider function is not returning 2 simple keys');
   }
 
   /**
@@ -90,14 +90,14 @@ class KeyService extends WebTestBase {
     // Create a new file key.
     $this->drupalGet('admin/config/system/key/add');
     $edit = [
-      'key_type' => 'key_type_file',
+      'key_provider' => 'key_provider_file',
     ];
-    $this->drupalPostAjaxForm(NULL, $edit, 'key_type');
+    $this->drupalPostAjaxForm(NULL, $edit, 'key_provider');
 
     $edit = [
       'id' => 'testing_key_file',
       'label' => 'Testing Key File',
-      'key_type' => 'key_type_file',
+      'key_provider' => 'key_provider_file',
       'key_settings[file_key_location]' => $rpath,
       'key_settings[file_key_method]' => 'file_contents',
     ];
@@ -117,14 +117,14 @@ class KeyService extends WebTestBase {
     // Create a second new file key.
     $this->drupalGet('admin/config/system/key/add');
     $edit = [
-      'key_type' => 'key_type_file',
+      'key_provider' => 'key_provider_file',
     ];
-    $this->drupalPostAjaxForm(NULL, $edit, 'key_type');
+    $this->drupalPostAjaxForm(NULL, $edit, 'key_provider');
 
     $edit = [
       'id' => 'testing_key_file2',
       'label' => 'Testing Key File2',
-      'key_type' => 'key_type_file',
+      'key_provider' => 'key_provider_file',
       'key_settings[file_key_location]' => $rpath,
       'key_settings[file_key_method]' => 'file_contents',
     ];

@@ -19,7 +19,7 @@ interface KeyInterface extends ConfigEntityInterface {
    *
    * @return string
    */
-  public function getKeyType();
+  public function getKeyProvider();
 
   /**
    * The plugin configuration for the selected key.

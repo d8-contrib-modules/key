@@ -26,7 +26,7 @@ class FileKeyTest extends KeyTypeTestBase {
 
     // Create a private key.
     $output = '';
-    $this->keyFile = sys_get_temp_dir() . $this->getRandomGenerator()->word(10) . '.key';
+    $this->keyFile = sys_get_temp_dir() . '/' . $this->getRandomGenerator()->word(10) . '.key';
     $resource = openssl_pkey_new(['digest_alg' => 'sha1', 'private_key_bits' => 1024, 'private_key_type' => OPENSSL_KEYTYPE_RSA]);
     openssl_pkey_export($resource, $output);
 

@@ -2,6 +2,6 @@
 entity.key.collection:
   title: 'Keys'
   route_name: entity.key.collection
-  description: 'Manage systemwide keys.'
+  description: 'Manage sitewide keys.'
   parent: system.admin_structure
 

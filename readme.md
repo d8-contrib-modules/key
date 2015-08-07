@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/d8-contrib-modules/key.svg?branch=master)](https://travis-ci.org/d8-contrib-modules/key)
 
-This module provides the ability for site administrators to manage systemwide keys, which can be used, for example, to integrate with external services. Keys are available for use by other modules using a Drupal service provided by Key.
+This module provides the ability for site administrators to manage sitewide keys, which can be used, for example, to integrate with external services. Keys are available for use by other modules using a Drupal service provided by Key.
 
 ## Managing Keys
 

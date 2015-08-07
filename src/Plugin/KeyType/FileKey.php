@@ -78,6 +78,7 @@ class FileKey extends KeyTypeBase {
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
     $this->configuration['file_key_location'] = $form_state->getValue('file_key_location');
+    $this->configuration['file_key_method'] = $form_state->getValue('file_key_method');
   }
 
   /**

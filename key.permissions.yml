@@ -1,0 +1,3 @@
+administer keys:
+  title: 'Administer keys'
+  description: 'Add, edit, and delete sitewide keys.'

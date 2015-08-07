@@ -39,8 +39,8 @@ class FileKey extends KeyProviderBase {
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $form['file_key_location'] = array(
       '#type' => 'textfield',
-      '#title' => t('Key Location'),
-      '#description' => t('The location of the file in which the key will be stored. The path may be absolute (e.g., %abs), relative to the Drupal directory (e.g., %rel), or defined using a stream wrapper (e.g., %str).', array(
+      '#title' => $this->t('Key Location'),
+      '#description' => $this->t('The location of the file in which the key will be stored. The path may be absolute (e.g., %abs), relative to the Drupal directory (e.g., %rel), or defined using a stream wrapper (e.g., %str).', array(
         '%abs' => '/etc/keys/foobar.key',
         '%rel' => '../keys/foobar.key',
         '%str' => 'private://keys/foobar.key',
@@ -50,11 +50,11 @@ class FileKey extends KeyProviderBase {
     );
     $form['file_key_method'] = array(
       '#type' => 'select',
-      '#title' => t('Method'),
-      '#description' => t('If the selected method is “File contents”, the contents of the file will be used as entered. If “MD5 hash” is selected, an MD5 hash of the file contents will be used as the key.'),
+      '#title' => $this->t('Method'),
+      '#description' => $this->t('If the selected method is “File contents”, the contents of the file will be used as entered. If “MD5 hash” is selected, an MD5 hash of the file contents will be used as the key.'),
       '#options' => array(
-        'file_contents' => t('File contents'),
-        'md5' => t('MD5 hash'),
+        'file_contents' => $this->t('File contents'),
+        'md5' => $this->t('MD5 hash'),
       ),
       '#default_value' => $this->getConfiguration()['file_key_method'],
     );
@@ -78,6 +78,7 @@ class FileKey extends KeyProviderBase {
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
     $this->configuration['file_key_location'] = $form_state->getValue('file_key_location');
+    $this->configuration['file_key_method'] = $form_state->getValue('file_key_method');
   }
 
   /**

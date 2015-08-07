@@ -38,8 +38,8 @@ class SimpleKey extends KeyProviderBase {
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $form['simple_key_value'] = array(
       '#type' => 'textarea',
-      '#title' => t('Key Value'),
-      '#description' => t('Enter the value of the key'),
+      '#title' => $this->t('Key Value'),
+      '#description' => $this->t('Enter the value of the key'),
       '#required' => TRUE,
       '#default_value' => $this->getConfiguration()['simple_key_value'],
     );

@@ -2,26 +2,26 @@
 
 /**
  * @file
- * Contains Drupal\key\KeyType\FileKey.
+ * Contains Drupal\key\KeyProvider\FileKey.
  */
 
 
-namespace Drupal\key\Plugin\KeyType;
+namespace Drupal\key\Plugin\KeyProvider;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\key\KeyTypeBase;
+use Drupal\key\KeyProviderBase;
 
 /**
  * Enforces a number of a type of character in passwords.
  *
- * @KeyType(
- *   id = "key_type_file",
+ * @KeyProvider(
+ *   id = "key_provider_file",
  *   title = @Translation("File Key"),
- *   description = @Translation("This key type is stored within a file in the filesystem."),
+ *   description = @Translation("This key provider is stored within a file in the filesystem."),
  *   storage_method = "file",
  * )
  */
-class FileKey extends KeyTypeBase {
+class FileKey extends KeyProviderBase {
 
   /**
    * {@inheritdoc}

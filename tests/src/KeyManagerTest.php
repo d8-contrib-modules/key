@@ -5,7 +5,7 @@
 
 namespace Drupal\Tests\key;
 
-use Drupal\key\Plugin\KeyType\SimpleKey;
+use Drupal\key\Plugin\KeyProvider\SimpleKey;
 use Drupal\key\Entity\Key;
 use Drupal\key\KeyManager;
 
@@ -33,14 +33,14 @@ class KeyManagerTest extends KeyTestBase {
   public function defaultKeyContentProvider() {
     $defaults = ['simple_key_value' => $this->createToken()];
     $definition = [
-      'id' => 'key_type_Simple',
-      'class' => 'Drupal\key\Plugin\KeyType\SimpleKey',
+      'id' => 'key_provider_Simple',
+      'class' => 'Drupal\key\Plugin\KeyProvider\SimpleKey',
       'title' => 'Simple Key',
     ];
-    $keyType = new SimpleKey($defaults, 'key_type_simple', $definition);
+    $KeyProvider = new SimpleKey($defaults, 'key_provider_simple', $definition);
 
     return [
-      [$defaults, $keyType]
+      [$defaults, $KeyProvider]
     ];
   }
 
@@ -99,12 +99,12 @@ class KeyManagerTest extends KeyTestBase {
    * @group key
    * @dataProvider defaultKeyContentProvider
    */
-  public function testGetKeyValue($defaults, $keyType) {
-    // Make the key type plugin manager return a plugin instance.
-    $this->keyTypeManager->expects($this->any())
+  public function testGetKeyValue($defaults, $KeyProvider) {
+    // Make the key provider plugin manager return a plugin instance.
+    $this->KeyProviderManager->expects($this->any())
       ->method('createInstance')
-      ->with('key_type_simple', $defaults)
-      ->willReturn($keyType);
+      ->with('key_provider_simple', $defaults)
+      ->willReturn($KeyProvider);
 
     $this->key->set('key_settings', $defaults);
 
@@ -134,16 +134,16 @@ class KeyManagerTest extends KeyTestBase {
    * @group key
    * @dataProvider defaultKeyContentProvider
    */
-  public function testGetDefaultKeyContent($defaults, $keyType) {
+  public function testGetDefaultKeyContent($defaults, $KeyProvider) {
     // On the first run, config storage will return NULL.
     $settings = $this->keyManager->getDefaultKeyContents();
     $this->assertEquals(NULL, $settings);
 
-    // Make the key type plugin manager return a plugin instance.
-    $this->keyTypeManager->expects($this->any())
+    // Make the key provider plugin manager return a plugin instance.
+    $this->KeyProviderManager->expects($this->any())
       ->method('createInstance')
-      ->with('key_type_simple', $defaults)
-      ->willReturn($keyType);
+      ->with('key_provider_simple', $defaults)
+      ->willReturn($KeyProvider);
 
     $this->key->set('key_settings', $defaults);
 
@@ -152,35 +152,35 @@ class KeyManagerTest extends KeyTestBase {
   }
 
   /**
-   * Test get keys by type.
+   * Test get keys by provider.
    *
    * @group key
    */
-  public function testGetKeysByType() {
-    // Create a key type plugin to play with.
+  public function testgetKeysByProvider() {
+    // Create a key provider plugin to play with.
     $defaults = ['simple_key_value' => $this->createToken()];
     $definition = [
-      'id' => 'key_type_Simple',
-      'class' => 'Drupal\key\Plugin\KeyType\SimpleKey',
+      'id' => 'key_provider_Simple',
+      'class' => 'Drupal\key\Plugin\KeyProvider\SimpleKey',
       'title' => 'Simple Key',
     ];
-    $keyType = new SimpleKey($defaults, 'key_type_simple', $definition);
+    $KeyProvider = new SimpleKey($defaults, 'key_provider_simple', $definition);
 
-    // Make the key type plugin manager return a plugin instance.
-    $this->keyTypeManager->expects($this->any())
+    // Make the key provider plugin manager return a plugin instance.
+    $this->KeyProviderManager->expects($this->any())
       ->method('createInstance')
-      ->with('key_type_simple', $defaults)
-      ->willReturn($keyType);
+      ->with('key_provider_simple', $defaults)
+      ->willReturn($KeyProvider);
 
     // Mock the loadByProperties method in entity manager.
     $this->configStorage->expects($this->any())
       ->method('loadByProperties')
-      ->with(['key_type' => 'key_type_simple'])
+      ->with(['key_provider' => 'key_provider_simple'])
       ->willReturn([$this->key_id => $this->key]);
 
     $this->key->set('key_settings', $defaults);
 
-    $keys = $this->keyManager->getKeysByType('key_type_simple');
+    $keys = $this->keyManager->getKeysByProvider('key_provider_simple');
     $this->assertEquals($this->key, $keys[$this->key_id]);
   }
 
@@ -190,26 +190,26 @@ class KeyManagerTest extends KeyTestBase {
    * @group key
    */
   public function testGetKeysByStorageMethod() {
-    // Create a key type plugin to play with.
+    // Create a key provider plugin to play with.
     $defaults = ['simple_key_value' => $this->createToken()];
     $definition = [
-      'id' => 'key_type_Simple',
-      'class' => 'Drupal\key\Plugin\KeyType\SimpleKey',
+      'id' => 'key_provider_Simple',
+      'class' => 'Drupal\key\Plugin\KeyProvider\SimpleKey',
       'title' => 'Simple Key',
     ];
-    $keyType = new SimpleKey($defaults, 'key_type_simple', $definition);
+    $KeyProvider = new SimpleKey($defaults, 'key_provider_simple', $definition);
 
     // Mock the loadByProperties method in entity manager.
     $this->configStorage->expects($this->any())
       ->method('loadByProperties')
-      ->with(['key_type' => 'key_type_simple'])
+      ->with(['key_provider' => 'key_provider_simple'])
       ->willReturn([$this->key_id => $this->key]);
 
-    // Make the key type plugin manager return a plugin instance.
-    $this->keyTypeManager->expects($this->any())
+    // Make the key provider plugin manager return a plugin instance.
+    $this->KeyProviderManager->expects($this->any())
       ->method('createInstance')
-      ->with('key_type_simple', $defaults)
-      ->willReturn($keyType);
+      ->with('key_provider_simple', $defaults)
+      ->willReturn($KeyProvider);
 
     $this->key->set('key_settings', $defaults);
 
@@ -226,7 +226,7 @@ class KeyManagerTest extends KeyTestBase {
     $this->key_id = $this->getRandomGenerator()->word(15);
     $defaults = [
       'key_id' => $this->key_id,
-      'key_type' => 'key_type_simple'
+      'key_provider' => 'key_provider_simple'
     ];
     $this->key = new Key($defaults, 'key');
 
@@ -243,23 +243,23 @@ class KeyManagerTest extends KeyTestBase {
       ->with($this->key_id)
       ->willReturn($this->key);
 
-    // Mock the KeyTypePluginManager service.
-    $this->keyTypeManager = $this->getMockBuilder('\Drupal\key\KeyTypePluginManager')
+    // Mock the KeyProviderPluginManager service.
+    $this->KeyProviderManager = $this->getMockBuilder('\Drupal\key\KeyProviderPluginManager')
       ->disableOriginalConstructor()
       ->getMock();
 
-    $this->keyTypeManager->expects($this->any())
+    $this->KeyProviderManager->expects($this->any())
       ->method('getDefinitions')
       ->willReturn([
-        ['id' => 'key_type_file', 'title' => 'File Key', 'storage_method' => 'file'],
-        ['id' => 'key_type_simple', 'title' => 'Simple Key', 'storage_method' => 'config']
+        ['id' => 'key_provider_file', 'title' => 'File Key', 'storage_method' => 'file'],
+        ['id' => 'key_provider_simple', 'title' => 'Simple Key', 'storage_method' => 'config']
       ]);
 
-    $this->container->set('plugin.manager.key.key_type', $this->keyTypeManager);
+    $this->container->set('plugin.manager.key.key_provider', $this->KeyProviderManager);
     \Drupal::setContainer($this->container);
 
     // Create a new key manager object.
-    $this->keyManager = new KeyManager($this->entityManager, $this->configFactory, $this->keyTypeManager);
+    $this->keyManager = new KeyManager($this->entityManager, $this->configFactory, $this->KeyProviderManager);
   }
 
 }

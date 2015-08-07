@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Provides \Drupal\Tests\key\KeyTypeTestBase
+ * Provides \Drupal\Tests\key\KeyProviderTestBase
  */
 
 namespace Drupal\Tests\key;
@@ -13,7 +13,7 @@ use Drupal\Tests\Core\Form\FormTestBase;
 /**
  * Provides a base form to test plugin form methods.
  */
-abstract class KeyTypeTestBase extends FormTestBase {
+abstract class KeyProviderTestBase extends FormTestBase {
 
   /**
    * @var \Drupal\Core\Form\FormState
@@ -21,7 +21,7 @@ abstract class KeyTypeTestBase extends FormTestBase {
   protected $form_state;
 
   /**
-   * @var \Drupal\key\KeyTypeInterface
+   * @var \Drupal\key\KeyProviderInterface
    */
   protected $plugin;
 

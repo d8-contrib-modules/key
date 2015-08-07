@@ -1,20 +1,20 @@
 <?php
 /**
  * @file
- * Provides \Drupal\Tests\key\Plugin\KeyType\SimpleKeyTest
+ * Provides \Drupal\Tests\key\Plugin\KeyProvider\SimpleKeyTest
  */
 
-namespace Drupal\Tests\key\Plugin\KeyType;
+namespace Drupal\Tests\key\Plugin\KeyProvider;
 
-use Drupal\Tests\key\KeyTypeTestBase;
+use Drupal\Tests\key\KeyProviderTestBase;
 
 /**
  * Test the SimpleKey plugin.
  */
-class SimpleKeyTest extends KeyTypeTestBase {
+class SimpleKeyTest extends KeyProviderTestBase {
 
-  const PLUGIN_CLASS = '\Drupal\key\Plugin\KeyType\SimpleKey';
-  const PLUGIN_ID = 'key_type_simple';
+  const PLUGIN_CLASS = '\Drupal\key\Plugin\KeyProvider\SimpleKey';
+  const PLUGIN_ID = 'key_provider_simple';
   const PLUGIN_TITLE = 'Simple Key';
   const PLUGIN_STORAGE = 'config';
 

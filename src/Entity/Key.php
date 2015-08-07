@@ -53,12 +53,12 @@ class Key extends ConfigEntityBase implements KeyInterface {
    */
   protected $label;
 
-  protected $key_type;
+  protected $key_provider;
 
   protected $key_settings = [];
 
-  public function getKeyType() {
-    return $this->key_type;
+  public function getKeyProvider() {
+    return $this->key_provider;
   }
 
   public function getKeySettings() {
@@ -70,11 +70,11 @@ class Key extends ConfigEntityBase implements KeyInterface {
    */
   public function getKeyValue(){
     // Create instance of the plugin.
-    $plugin = \Drupal::service('plugin.manager.key.key_type');
-    $key_type = $plugin->createInstance($this->key_type, $this->key_settings);
+    $plugin = \Drupal::service('plugin.manager.key.key_provider');
+    $key_provider = $plugin->createInstance($this->key_provider, $this->key_settings);
 
     // Return it's key contents.
-    return $key_type->getKeyValue();
+    return $key_provider->getKeyValue();
   }
 
 }

@@ -1,20 +1,20 @@
 <?php
 /**
  * @file
- * Provides \Drupal\Tests\key\Plugin\KeyType\FileKeyTest
+ * Provides \Drupal\Tests\key\Plugin\KeyProvider\FileKeyTest
  */
 
-namespace Drupal\Tests\key\Plugin\KeyType;
+namespace Drupal\Tests\key\Plugin\KeyProvider;
 
-use Drupal\Tests\key\KeyTypeTestBase;
+use Drupal\Tests\key\KeyProviderTestBase;
 
 /**
  * Test the FileKey plugin.
  */
-class FileKeyTest extends KeyTypeTestBase {
+class FileKeyTest extends KeyProviderTestBase {
 
-  const PLUGIN_CLASS = '\Drupal\key\Plugin\KeyType\FileKey';
-  const PLUGIN_ID = 'key_type_file';
+  const PLUGIN_CLASS = '\Drupal\key\Plugin\KeyProvider\FileKey';
+  const PLUGIN_ID = 'key_provider_file';
   const PLUGIN_TITLE = 'File Key';
   const PLUGIN_STORAGE = 'file';
 
@@ -27,7 +27,7 @@ class FileKeyTest extends KeyTypeTestBase {
     // Create a private key.
     $output = '';
     $this->keyFile = sys_get_temp_dir() . '/' . $this->getRandomGenerator()->word(10) . '.key';
-    $resource = openssl_pkey_new(['digest_alg' => 'sha1', 'private_key_bits' => 1024, 'private_key_type' => OPENSSL_KEYTYPE_RSA]);
+    $resource = openssl_pkey_new(['digest_alg' => 'sha1', 'private_key_bits' => 1024, 'private_key_provider' => OPENSSL_KEYTYPE_RSA]);
     openssl_pkey_export($resource, $output);
 
     file_put_contents($this->keyFile, $output);

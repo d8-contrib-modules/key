@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Provides Drupal\key\KeyTypeBase.
+ * Provides Drupal\key\KeyProviderBase.
  */
 
 namespace Drupal\key;
@@ -10,7 +10,7 @@ use Drupal\Component\Plugin\PluginBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
-abstract class KeyTypeBase extends PluginBase implements KeyTypeInterface {
+abstract class KeyProviderBase extends PluginBase implements KeyProviderInterface {
   use StringTranslationTrait;
 
   /**

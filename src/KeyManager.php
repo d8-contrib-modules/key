@@ -46,31 +46,31 @@ class KeyManager {
   }
 
   /*
-   * Loading keys that are of the specified key type.
+   * Loading keys that are of the specified key provider.
    *
-   * @param string $key_type
-   *   The key type ID to use.
+   * @param string $key_provider
+   *   The key provider ID to use.
    */
-  public function getKeysByType($key_type_id) {
-    return $this->entityManager->getStorage('key')->loadByProperties(array('key_type' => $key_type_id));
+  public function getKeysByProvider($key_provider_id) {
+    return $this->entityManager->getStorage('key')->loadByProperties(array('key_provider' => $key_provider_id));
   }
 
   /*
    * Loading keys that are of the specified storage method.
    *
-   * Storage method is an annotation of a key's key type.
+   * Storage method is an annotation of a key's key provider.
    *
    * @param string $storage_method
-   *   The storage method of the key type.
+   *   The storage method of the key provider.
    */
   public function getKeysByStorageMethod($storage_method) {
-    $key_types = array_filter($this->pluginManager->getDefinitions(), function ($definition) use ($storage_method) {
+    $key_providers = array_filter($this->pluginManager->getDefinitions(), function ($definition) use ($storage_method) {
       return $definition['storage_method'] == $storage_method;
     });
 
     $keys = [];
-    foreach ($key_types as $key_type) {
-      $keys = array_merge($keys, $this->getKeysByType($key_type['id']));
+    foreach ($key_providers as $key_provider) {
+      $keys = array_merge($keys, $this->getKeysByProvider($key_provider['id']));
     }
     return $keys;
   }

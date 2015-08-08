@@ -95,27 +95,4 @@ class KeyManager {
     return $this->entityManager->getStorage('key')->load($key_id)->getKeyValue();
   }
 
-  /*
-   * Loading the configured default key.
-   */
-  public function getDefaultKey() {
-    $key_id = $this->configFactory->get('key.default_config')->get('default_key');
-    if ($key_id) {
-      return $this->entityManager->getStorage('key')->load($key_id);
-    }
-    return NULL;
-  }
-
-  /*
-   * Loading the key contents for the configured default key.
-   */
-  public function getDefaultKeyContents() {
-    $key_id = $this->configFactory->get('key.default_config')->get('default_key');
-    if ($key_id) {
-      $key = $this->entityManager->getStorage('key')->load($key_id);
-      return $key->getKeyValue();
-    }
-    return NULL;
-  }
-
 }

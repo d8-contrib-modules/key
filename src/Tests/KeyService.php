@@ -29,7 +29,7 @@ class KeyService extends WebTestBase {
 
     // Create new simple key.
     $test_string = 'testing 123 &*#';
-    $this->drupalGet('admin/config/system/key/add');
+    $this->drupalGet('admin/config/security/key/add');
     $edit = [
       'key_provider' => 'key_provider_simple',
     ];
@@ -57,7 +57,7 @@ class KeyService extends WebTestBase {
 
     // Create another simple key.
     $test_string = 'testing 12345678 (837#';
-    $this->drupalGet('admin/config/system/key/add');
+    $this->drupalGet('admin/config/security/key/add');
     $edit = [
       'key_provider' => 'key_provider_simple',
     ];
@@ -88,7 +88,7 @@ class KeyService extends WebTestBase {
     $this->drupalLogin($user1);
 
     // Create a new file key.
-    $this->drupalGet('admin/config/system/key/add');
+    $this->drupalGet('admin/config/security/key/add');
     $edit = [
       'key_provider' => 'key_provider_file',
     ];
@@ -115,7 +115,7 @@ class KeyService extends WebTestBase {
     $this->assertEqual(count($keys), '1', 'The getKeysByStorageMethod function is not returning 1 file key');
 
     // Create a second new file key.
-    $this->drupalGet('admin/config/system/key/add');
+    $this->drupalGet('admin/config/security/key/add');
     $edit = [
       'key_provider' => 'key_provider_file',
     ];

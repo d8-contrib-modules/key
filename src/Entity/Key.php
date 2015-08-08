@@ -32,8 +32,9 @@ use Drupal\key\KeyInterface;
  *     "uuid" = "uuid"
  *   },
  *   links = {
- *     "edit-form" = "/admin/config/system/key/{key}/edit",
- *     "delete-form" = "/admin/config/system/key/{key}/delete",
+ *     "add-form" = "/admin/config/system/key/add",
+ *     "edit-form" = "/admin/config/system/key/manage/{key}",
+ *     "delete-form" = "/admin/config/system/key/manage/{key}/delete",
  *     "collection" = "/admin/config/system/key"
  *   }
  * )

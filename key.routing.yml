@@ -17,7 +17,7 @@ entity.key.add_form:
     _permission: 'administer keys'
 
 entity.key.edit_form:
-  path: '/admin/config/system/key/{key}'
+  path: '/admin/config/system/key/manage/{key}'
   defaults:
     _entity_form: 'key.edit'
     _title: 'Edit Key'
@@ -25,7 +25,7 @@ entity.key.edit_form:
     _permission: 'administer keys'
 
 entity.key.delete_form:
-  path: '/admin/config/system/key/{key}/delete'
+  path: '/admin/config/system/key/manage/{key}/delete'
   defaults:
     _entity_form: 'key.delete'
     _title: 'Delete Key'

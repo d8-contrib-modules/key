@@ -23,8 +23,8 @@ class KeyService extends WebTestBase {
    */
   function testSimpleKeyService() {
 
-    // Create user with permission to create policy.
-    $user1 = $this->drupalCreateUser(array('administer site configuration'));
+    // Create user with permission to administer keys.
+    $user1 = $this->drupalCreateUser(array('administer keys'));
     $this->drupalLogin($user1);
 
     // Create new simple key.
@@ -83,8 +83,8 @@ class KeyService extends WebTestBase {
     $rpath = realpath(drupal_get_path('module','key').'/tests/assets/testkey.txt');
     $contents = file_get_contents($rpath);
 
-    // Create user with permission to create policy.
-    $user1 = $this->drupalCreateUser(array('administer site configuration'));
+    // Create user with permission to administer keys.
+    $user1 = $this->drupalCreateUser(array('administer keys'));
     $this->drupalLogin($user1);
 
     // Create a new file key.

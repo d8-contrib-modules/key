@@ -25,7 +25,7 @@ use Drupal\key\KeyInterface;
  *     }
  *   },
  *   config_prefix = "key",
- *   admin_permission = "administer site configuration",
+ *   admin_permission = "administer keys",
  *   entity_keys = {
  *     "id" = "id",
  *     "label" = "label",

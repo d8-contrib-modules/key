@@ -129,7 +129,7 @@ class KeyManagerTest extends KeyTestBase {
   }
 
   /**
-   * Test load of defaul key content.
+   * Test load of default key content.
    *
    * @group key
    * @dataProvider defaultKeyContentProvider
@@ -156,7 +156,7 @@ class KeyManagerTest extends KeyTestBase {
    *
    * @group key
    */
-  public function testgetKeysByProvider() {
+  public function testGetKeysByProvider() {
     // Create a key provider plugin to play with.
     $defaults = ['simple_key_value' => $this->createToken()];
     $definition = [

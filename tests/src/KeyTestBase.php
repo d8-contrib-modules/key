@@ -34,7 +34,7 @@ class KeyTestBase extends UnitTestCase {
   /**
    * @var \Drupal\Core\DependencyInjection\ContainerBuilder
    *
-   * This should be used sparingly by test cases to add to the conatiner as
+   * This should be used sparingly by test cases to add to the container as
    * necessary for tests.
    */
   protected $container;

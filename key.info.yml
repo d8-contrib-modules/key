@@ -1,6 +1,6 @@
-name: key
+name: Key
 type: module
-description: Managing system keys
+description: Provides the ability to manage sitewide keys and a service to retrieve them.
 core: 8.x
 package: Security
 

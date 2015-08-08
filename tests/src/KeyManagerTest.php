@@ -113,45 +113,6 @@ class KeyManagerTest extends KeyTestBase {
   }
 
   /**
-   * Test loading of default key entity.
-   *
-   * @group key
-   */
-  public function testGetDefaultKey() {
-    // On the first run, config storage will return NULL.
-    $default_key = $this->keyManager->getDefaultKey();
-    $this->assertEquals(NULL, $default_key);
-
-    // On the second run, config storage will return the key entity.
-    $default_key = $this->keyManager->getDefaultKey();
-    $this->assertInstanceOf('\Drupal\key\Entity\Key', $default_key);
-    $this->assertEquals($this->key_id, $default_key->get('key_id'));
-  }
-
-  /**
-   * Test load of default key content.
-   *
-   * @group key
-   * @dataProvider defaultKeyContentProvider
-   */
-  public function testGetDefaultKeyContent($defaults, $KeyProvider) {
-    // On the first run, config storage will return NULL.
-    $settings = $this->keyManager->getDefaultKeyContents();
-    $this->assertEquals(NULL, $settings);
-
-    // Make the key provider plugin manager return a plugin instance.
-    $this->KeyProviderManager->expects($this->any())
-      ->method('createInstance')
-      ->with('key_provider_simple', $defaults)
-      ->willReturn($KeyProvider);
-
-    $this->key->set('key_settings', $defaults);
-
-    $settings = $this->keyManager->getDefaultKeyContents();
-    $this->assertEquals($defaults['simple_key_value'], $settings);
-  }
-
-  /**
    * Test get keys by provider.
    *
    * @group key

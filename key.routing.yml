@@ -32,12 +32,3 @@ entity.key.delete_form:
   requirements:
     _permission: 'administer keys'
 
-
-key.key_config_form:
-  path: '/admin/config/key/keyconfig'
-  defaults:
-    _form: '\Drupal\key\Form\KeyConfigForm'
-    _title: 'KeyConfigForm'
-  requirements:
-    _permission: 'access administration pages'
-

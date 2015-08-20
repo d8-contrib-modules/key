@@ -73,7 +73,7 @@ class KeyForm extends EntityForm {
       '#type' => 'select',
       '#title' => $this->t('Key Provider'),
       '#options' => $key_providers,
-      '#empty_option' => t('Select Key Provider'),
+      '#empty_option' => t('- Select key provider -'),
       '#empty_value' => '',
       '#ajax' => [
         'callback' => [$this, 'getKeyProviderForm'],

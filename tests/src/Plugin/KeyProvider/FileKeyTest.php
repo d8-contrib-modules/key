@@ -60,10 +60,6 @@ class FileKeyTest extends KeyProviderTestBase {
       ->withConsecutive(
         ['Key Location'],
         ['The location of the file in which the key will be stored. The path may be absolute (e.g., %abs), relative to the Drupal directory (e.g., %rel), or defined using a stream wrapper (e.g., %str).'],
-        ['Method'],
-        ['If the selected method is “File contents”, the contents of the file will be used as entered. If “MD5 hash” is selected, an MD5 hash of the file contents will be used as the key.'],
-        ['File contents'],
-        ['MD5 hash'],
         ['File does not exist or is not readable.']
       )
       ->willReturn('File does not exist or is not readable.');

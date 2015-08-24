@@ -38,6 +38,7 @@ class KeyService extends WebTestBase {
     $edit = [
       'id' => 'testing_key',
       'label' => 'Testing Key',
+      'description' => 'A test of the simple key provider.',
       'key_provider' => 'key_provider_simple',
       'key_settings[simple_key_value]' => $test_string,
     ];
@@ -66,6 +67,7 @@ class KeyService extends WebTestBase {
     $edit = [
       'id' => 'testing_key2',
       'label' => 'Testing Key 2',
+      'description' => 'A second test of the simple key provider.',
       'key_provider' => 'key_provider_simple',
       'key_settings[simple_key_value]' => $test_string,
     ];
@@ -97,6 +99,7 @@ class KeyService extends WebTestBase {
     $edit = [
       'id' => 'testing_key_file',
       'label' => 'Testing Key File',
+      'description' => 'A test of the file key provider.',
       'key_provider' => 'key_provider_file',
       'key_settings[file_key_location]' => $rpath,
       'key_settings[file_key_method]' => 'file_contents',
@@ -124,6 +127,7 @@ class KeyService extends WebTestBase {
     $edit = [
       'id' => 'testing_key_file2',
       'label' => 'Testing Key File2',
+      'description' => 'A second test of the file key provider.',
       'key_provider' => 'key_provider_file',
       'key_settings[file_key_location]' => $rpath,
       'key_settings[file_key_method]' => 'file_contents',

@@ -29,7 +29,6 @@ class FileKey extends KeyProviderBase {
   public function defaultConfiguration() {
     return [
       'file_key_location' => '',
-      'file_key_method' => 'file_contents',
     ];
   }
 
@@ -48,16 +47,7 @@ class FileKey extends KeyProviderBase {
       '#required' => TRUE,
       '#default_value' => $this->getConfiguration()['file_key_location'],
     );
-    $form['file_key_method'] = array(
-      '#type' => 'select',
-      '#title' => $this->t('Method'),
-      '#description' => $this->t('If the selected method is “File contents”, the contents of the file will be used as entered. If “MD5 hash” is selected, an MD5 hash of the file contents will be used as the key.'),
-      '#options' => array(
-        'file_contents' => $this->t('File contents'),
-        'md5' => $this->t('MD5 hash'),
-      ),
-      '#default_value' => $this->getConfiguration()['file_key_method'],
-    );
+
     return $form;
   }
 
@@ -78,7 +68,6 @@ class FileKey extends KeyProviderBase {
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
     $this->configuration['file_key_location'] = $form_state->getValue('file_key_location');
-    $this->configuration['file_key_method'] = $form_state->getValue('file_key_method');
   }
 
   /**
@@ -92,16 +81,7 @@ class FileKey extends KeyProviderBase {
       return NULL;
     }
 
-    switch ($this->getConfiguration()['file_key_method']) {
-      case 'file_contents':
-        $key = file_get_contents($file);
-        break;
-      case 'md5':
-        $key = md5_file($file);
-        break;
-      default:
-        $key = NULL;
-    }
+    $key = file_get_contents($file);
 
     return $key;
   }

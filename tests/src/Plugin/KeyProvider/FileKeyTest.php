@@ -45,7 +45,7 @@ class FileKeyTest extends KeyProviderTestBase {
   }
 
   /**
-   * Test the plugin configuration form when using file contents method.
+   * Test the plugin configuration form.
    *
    * @group key
    */

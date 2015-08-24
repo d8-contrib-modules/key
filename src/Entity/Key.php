@@ -54,9 +54,15 @@ class Key extends ConfigEntityBase implements KeyInterface {
    */
   protected $label;
 
+  protected $description;
+
   protected $key_provider;
 
   protected $key_settings = [];
+
+  public function getDescription() {
+    return $this->description;
+  }
 
   public function getKeyProvider() {
     return $this->key_provider;

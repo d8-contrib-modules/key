@@ -10,6 +10,9 @@ key.key.*:
       label: 'Label'
     uuid:
       type: string
+    description:
+      type: description
+      label: 'Description'
     key_provider:
       type: string
       label: Key Provider

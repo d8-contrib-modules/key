@@ -31,11 +31,11 @@ key_provider:
 key.key_provider.plugin.*:
   type: key_provider
 
-key.key_provider.plugin.key_provider_simple:
+key.key_provider.plugin.config:
   type: key_provider
-  label: 'Simple Key'
+  label: 'Configuration'
   mapping:
-    simple_key_value:
+    key_value:
       type: string
       label: 'Key Value'
 

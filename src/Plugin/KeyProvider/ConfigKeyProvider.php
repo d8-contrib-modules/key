@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains Drupal\key\KeyProvider\SimpleKey.
+ * Contains Drupal\key\KeyProvider\ConfigKeyProvider.
  */
 
 
@@ -12,23 +12,23 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\key\KeyProviderBase;
 
 /**
- * Enforces a number of a type of character in passwords.
+ * Adds a key provider that allows a key to be stored in configuration.
  *
  * @KeyProvider(
- *   id = "key_provider_simple",
- *   title = @Translation("Simple Key"),
- *   description = @Translation("This key provider is stored within the Drupal database."),
+ *   id = "config",
+ *   title = @Translation("Configuration"),
+ *   description = @Translation("Allows a key to be stored in Drupal's configuration system."),
  *   storage_method = "config",
  * )
  */
-class SimpleKey extends KeyProviderBase {
+class ConfigKeyProvider extends KeyProviderBase {
 
   /**
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
     return [
-      'simple_key_value' => '',
+      'key_value' => '',
     ];
   }
 
@@ -36,12 +36,12 @@ class SimpleKey extends KeyProviderBase {
    * {@inheritdoc}
    */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
-    $form['simple_key_value'] = array(
+    $form['key_value'] = array(
       '#type' => 'textarea',
-      '#title' => $this->t('Key Value'),
-      '#description' => $this->t('Enter the value of the key'),
+      '#title' => $this->t('Key value'),
+      '#description' => $this->t("Enter the key to save in Drupal's configuration system."),
       '#required' => TRUE,
-      '#default_value' => $this->getConfiguration()['simple_key_value'],
+      '#default_value' => $this->getConfiguration()['key_value'],
     );
     return $form;
   }
@@ -56,14 +56,14 @@ class SimpleKey extends KeyProviderBase {
    * {@inheritdoc}
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
-    $this->configuration['simple_key_value'] = $form_state->getValue('simple_key_value');
+    $this->configuration['key_value'] = $form_state->getValue('key_value');
   }
 
   /**
    * {@inheritdoc}
    */
   public function getKeyValue() {
-    return $this->configuration['simple_key_value'];
+    return $this->configuration['key_value'];
   }
 
 }

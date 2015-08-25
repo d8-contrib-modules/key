@@ -53,10 +53,9 @@ class KeyForm extends EntityForm {
     $form['#tree'] = TRUE;
     $form['label'] = array(
       '#type' => 'textfield',
-      '#title' => $this->t('Label'),
+      '#title' => $this->t('Key name'),
       '#maxlength' => 255,
       '#default_value' => $key->label(),
-      '#description' => $this->t("Label for the Key."),
       '#required' => TRUE,
     );
 

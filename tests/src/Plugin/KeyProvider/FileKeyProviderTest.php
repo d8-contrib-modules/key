@@ -58,7 +58,7 @@ class FileKeyProviderTest extends KeyProviderTestBase {
     $this->translationManager->expects($this->any())
       ->method('translate')
       ->withConsecutive(
-        ['Key Location'],
+        ['File Location'],
         ['The location of the file in which the key will be stored. The path may be absolute (e.g., %abs), relative to the Drupal directory (e.g., %rel), or defined using a stream wrapper (e.g., %str).'],
         ['File does not exist or is not readable.']
       )

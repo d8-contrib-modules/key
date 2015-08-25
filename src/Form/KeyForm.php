@@ -68,6 +68,13 @@ class KeyForm extends EntityForm {
       '#disabled' => !$key->isNew(),
     );
 
+    $form['description'] = array(
+      '#type' => 'textfield',
+      '#title' => $this->t('Description'),
+      '#default_value' => $key->getDescription(),
+      '#description' => $this->t('A short description of the key.'),
+    );
+
     $form['key_provider'] = array(
       '#type' => 'select',
       '#title' => $this->t('Key Provider'),

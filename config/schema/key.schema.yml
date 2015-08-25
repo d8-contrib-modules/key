@@ -43,6 +43,3 @@ key.key_provider.plugin.key_provider_file:
     file_key_location:
       type: string
       label: 'File Location'
-    file_key_method:
-      type: string
-      label: 'Key Method'

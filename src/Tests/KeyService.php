@@ -99,7 +99,6 @@ class KeyService extends WebTestBase {
       'label' => 'Testing Key File',
       'key_provider' => 'key_provider_file',
       'key_settings[file_key_location]' => $rpath,
-      'key_settings[file_key_method]' => 'file_contents',
     ];
     $this->drupalPostForm(NULL, $edit, t('Save'));
 
@@ -126,7 +125,6 @@ class KeyService extends WebTestBase {
       'label' => 'Testing Key File2',
       'key_provider' => 'key_provider_file',
       'key_settings[file_key_location]' => $rpath,
-      'key_settings[file_key_method]' => 'file_contents',
     ];
     $this->drupalPostForm(NULL, $edit, t('Save'));
 

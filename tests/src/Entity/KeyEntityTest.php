@@ -64,7 +64,7 @@ class KeyEntityTest extends KeyTestBase {
     $this->KeyProviderManager->expects($this->any())
       ->method('getDefinitions')
       ->willReturn([
-        ['id' => 'key_provider_file', 'title' => 'File Key', 'storage_method' => 'file'],
+        ['id' => 'file', 'title' => 'File', 'storage_method' => 'file'],
         ['id' => 'key_provider_simple', 'title' => 'Simple Key', 'storage_method' => 'config']
       ]);
     $this->KeyProviderManager->expects($this->any())

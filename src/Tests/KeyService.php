@@ -81,7 +81,7 @@ class KeyService extends WebTestBase {
   /**
    * Test getKeyValue functions.
    */
-  function testFileKeyService() {
+  function testFileKeyProviderService() {
     $rpath = realpath(drupal_get_path('module','key').'/tests/assets/testkey.txt');
     $contents = file_get_contents($rpath);
 
@@ -92,7 +92,7 @@ class KeyService extends WebTestBase {
     // Create a new file key.
     $this->drupalGet('admin/config/security/key/add');
     $edit = [
-      'key_provider' => 'key_provider_file',
+      'key_provider' => 'file',
     ];
     $this->drupalPostAjaxForm(NULL, $edit, 'key_provider');
 
@@ -100,8 +100,8 @@ class KeyService extends WebTestBase {
       'id' => 'testing_key_file',
       'label' => 'Testing Key File',
       'description' => 'A test of the file key provider.',
-      'key_provider' => 'key_provider_file',
-      'key_settings[file_key_location]' => $rpath,
+      'key_provider' => 'file',
+      'key_settings[file_location]' => $rpath,
     ];
     $this->drupalPostForm(NULL, $edit, t('Save'));
 
@@ -119,7 +119,7 @@ class KeyService extends WebTestBase {
     // Create a second new file key.
     $this->drupalGet('admin/config/security/key/add');
     $edit = [
-      'key_provider' => 'key_provider_file',
+      'key_provider' => 'file',
     ];
     $this->drupalPostAjaxForm(NULL, $edit, 'key_provider');
 
@@ -127,8 +127,8 @@ class KeyService extends WebTestBase {
       'id' => 'testing_key_file2',
       'label' => 'Testing Key File2',
       'description' => 'A second test of the file key provider.',
-      'key_provider' => 'key_provider_file',
-      'key_settings[file_key_location]' => $rpath,
+      'key_provider' => 'file',
+      'key_settings[file_location]' => $rpath,
     ];
     $this->drupalPostForm(NULL, $edit, t('Save'));
 

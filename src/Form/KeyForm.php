@@ -77,14 +77,14 @@ class KeyForm extends EntityForm {
       '#ajax' => [
         'callback' => [$this, 'getKeyProviderForm'],
         'event' => 'change',
-        'wrapper' => 'key-type-form',
+        'wrapper' => 'key-provider-form',
       ],
       '#required' => TRUE,
       '#default_value' => $key->getKeyProvider(),
     );
 
     $form['key_settings'] = [
-      '#prefix' => '<div id="key-type-form">',
+      '#prefix' => '<div id="key-provider-form">',
       '#suffix' => '</div>',
     ];
     if ($this->manager->hasDefinition($key->getKeyProvider())) {

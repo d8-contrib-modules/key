@@ -11,7 +11,7 @@ key.key.*:
     uuid:
       type: string
     description:
-      type: description
+      type: text
       label: 'Description'
     key_provider:
       type: string

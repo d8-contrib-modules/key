@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains Drupal\key\KeyProvider\FileKey.
+ * Contains Drupal\key\KeyProvider\FileKeyProvider.
  */
 
 
@@ -12,23 +12,23 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\key\KeyProviderBase;
 
 /**
- * Enforces a number of a type of character in passwords.
+ * Adds a key provider that allows a key to be stored in a file.
  *
  * @KeyProvider(
- *   id = "key_provider_file",
- *   title = @Translation("File Key"),
- *   description = @Translation("This key provider is stored within a file in the filesystem."),
+ *   id = "file",
+ *   title = @Translation("File"),
+ *   description = @Translation("Allows a key to be stored in a file within the filesystem."),
  *   storage_method = "file",
  * )
  */
-class FileKey extends KeyProviderBase {
+class FileKeyProvider extends KeyProviderBase {
 
   /**
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
     return [
-      'file_key_location' => '',
+      'file_location' => '',
     ];
   }
 
@@ -36,16 +36,16 @@ class FileKey extends KeyProviderBase {
    * {@inheritdoc}
    */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
-    $form['file_key_location'] = array(
+    $form['file_location'] = array(
       '#type' => 'textfield',
-      '#title' => $this->t('Key Location'),
+      '#title' => $this->t('File location'),
       '#description' => $this->t('The location of the file in which the key will be stored. The path may be absolute (e.g., %abs), relative to the Drupal directory (e.g., %rel), or defined using a stream wrapper (e.g., %str).', array(
         '%abs' => '/etc/keys/foobar.key',
         '%rel' => '../keys/foobar.key',
         '%str' => 'private://keys/foobar.key',
       )),
       '#required' => TRUE,
-      '#default_value' => $this->getConfiguration()['file_key_location'],
+      '#default_value' => $this->getConfiguration()['file_location'],
     );
 
     return $form;
@@ -55,11 +55,11 @@ class FileKey extends KeyProviderBase {
    * {@inheritdoc}
    */
   public function validateConfigurationForm(array &$form, FormStateInterface $form_state) {
-    $file = $form_state->getValue('file_key_location');
+    $file = $form_state->getValue('file_location');
 
     // Does the file exist and is it readable?
     if (!is_file($file) || !is_readable($file)) {
-      $form_state->setErrorByName('file_key_location', $this->t('File does not exist or is not readable.'));
+      $form_state->setErrorByName('file_location', $this->t('File does not exist or is not readable.'));
     }
   }
 
@@ -67,14 +67,14 @@ class FileKey extends KeyProviderBase {
    * {@inheritdoc}
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
-    $this->configuration['file_key_location'] = $form_state->getValue('file_key_location');
+    $this->configuration['file_location'] = $form_state->getValue('file_location');
   }
 
   /**
    * {@inheritdoc}
    */
   public function getKeyValue() {
-    $file = $this->configuration['file_key_location'];
+    $file = $this->configuration['file_location'];
 
     // Make sure the file exists and is readable.
     if (!is_file($file) || !is_readable($file)) {

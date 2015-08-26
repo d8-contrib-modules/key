@@ -36,14 +36,14 @@ class KeyListBuilder extends WebTestBase {
     $test_string = 'testing 123 &*#';
     $this->drupalGet('admin/config/security/key/add');
     $edit = [
-      'key_provider' => 'key_provider_simple',
+      'key_provider' => 'config',
     ];
     $this->drupalPostAjaxForm(NULL, $edit, 'key_provider');
     $edit = [
       'id' => 'testing_key',
       'label' => 'Testing Key',
-      'key_provider' => 'key_provider_simple',
-      'key_settings[simple_key_value]' => $test_string,
+      'key_provider' => 'config',
+      'key_settings[key_value]' => $test_string,
     ];
     $this->drupalPostForm(NULL, $edit, t('Save'));
 

@@ -31,18 +31,18 @@ key_provider:
 key.key_provider.plugin.*:
   type: key_provider
 
-key.key_provider.plugin.key_provider_simple:
+key.key_provider.plugin.config:
   type: key_provider
-  label: 'Simple Key'
+  label: 'Configuration'
   mapping:
-    simple_key_value:
+    key_value:
       type: string
       label: 'Key Value'
 
-key.key_provider.plugin.key_provider_file:
+key.key_provider.plugin.file:
   type: key_provider
-  label: 'Simple Key'
+  label: 'File'
   mapping:
-    file_key_location:
+    file_location:
       type: string
       label: 'File Location'

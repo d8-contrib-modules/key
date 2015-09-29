@@ -39,3 +39,11 @@ key.admin_index:
     _title: 'Security'
   requirements:
     _permission: 'access administration pages'
+
+entity.key.set_default:
+  path: '/admin/config/security/key/manage/{key}/default'
+  defaults:
+    _entity_form: 'key.default'
+    _title: 'Make Key Default'
+  requirements:
+    _permission: 'administer keys'

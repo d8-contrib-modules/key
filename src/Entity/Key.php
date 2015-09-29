@@ -21,7 +21,8 @@ use Drupal\key\KeyInterface;
  *     "form" = {
  *       "add" = "Drupal\key\Form\KeyForm",
  *       "edit" = "Drupal\key\Form\KeyForm",
- *       "delete" = "Drupal\key\Form\KeyDeleteForm"
+ *       "delete" = "Drupal\key\Form\KeyDeleteForm",
+ *       "default" = "Drupal\key\Form\KeyDefaultForm"
  *     }
  *   },
  *   config_prefix = "key",
@@ -35,7 +36,8 @@ use Drupal\key\KeyInterface;
  *     "add-form" = "/admin/config/security/key/add",
  *     "edit-form" = "/admin/config/security/key/manage/{key}",
  *     "delete-form" = "/admin/config/security/key/manage/{key}/delete",
- *     "collection" = "/admin/config/security/key"
+ *     "collection" = "/admin/config/security/key",
+ *     "set-default" = "/admin/config/security/key/manage/{key}/default",
  *   }
  * )
  */
@@ -60,6 +62,8 @@ class Key extends ConfigEntityBase implements KeyInterface {
 
   protected $key_settings = [];
 
+  protected $service_default;
+
   public function getDescription() {
     return $this->description;
   }
@@ -70,6 +74,26 @@ class Key extends ConfigEntityBase implements KeyInterface {
 
   public function getKeySettings() {
     return $this->key_settings;
+  }
+
+  public function getServiceDefault() {
+    return $this->service_default;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setServiceDefault() {
+    $entities = \Drupal::entityManager()
+      ->getStorage('key')
+      ->loadByProperties(['service_default'=>TRUE]);
+    foreach ($entities as $entity) {
+      $entity->service_default = FALSE;
+      $entity->save();
+    }
+
+    $this->service_default = TRUE;
+    $this->save();
   }
 
   /*

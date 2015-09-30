@@ -40,4 +40,9 @@ interface KeyInterface extends ConfigEntityInterface {
    */
   public function setServiceDefault();
 
+  /**
+   * Removes the key as service default.
+   */
+  public function removeServiceDefault();
+
 }

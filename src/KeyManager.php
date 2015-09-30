@@ -94,7 +94,12 @@ class KeyManager {
    */
   public function getDefaultKey() {
     $keys = $this->entityManager->getStorage('key')->loadByProperties(['service_default'=>TRUE]);
-    return array_shift($keys);
+
+    if (empty($keys)){
+      throw new \Exception('There is no default key set for the key manager to process.');
+    } else {
+      return array_shift($keys);
+    }
   }
 
   /*

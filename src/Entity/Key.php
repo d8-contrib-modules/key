@@ -96,6 +96,14 @@ class Key extends ConfigEntityBase implements KeyInterface {
     $this->save();
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function removeServiceDefault() {
+    $this->service_default = FALSE;
+    $this->save();
+  }
+
   /*
    * Returns key contents.
    */

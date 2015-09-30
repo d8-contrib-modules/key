@@ -19,7 +19,14 @@ class KeyDefaultForm extends EntityConfirmFormBase {
    * {@inheritdoc}
    */
   public function getQuestion() {
-    return $this->t('Are you sure you want to make %name the default key?', array('%name' => $this->entity->label()));
+
+    $message = 'Are you sure you want to make %name the default key?';
+
+    if ($this->entity->getServiceDefault()) {
+      $message = 'Are you sure you want to remove the default key from %name?';
+    }
+
+    return $this->t($message, array('%name' => $this->entity->label()));
   }
 
   /**
@@ -40,14 +47,22 @@ class KeyDefaultForm extends EntityConfirmFormBase {
    * {@inheritdoc}
    */
   public function getConfirmText() {
-    return $this->t('Set Default');
+    if ($this->entity->getServiceDefault()) {
+      return $this->t('Remove Default');
+    } else {
+      return $this->t('Set Default');
+    }
   }
 
   /**
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $this->entity->setServiceDefault();
+    if ($this->entity->getServiceDefault()) {
+      $this->entity->removeServiceDefault();
+    } else {
+      $this->entity->setServiceDefault();
+    }
 
     drupal_set_message(
       $this->t('content @type: @label is now default.',

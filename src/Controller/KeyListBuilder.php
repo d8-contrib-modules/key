@@ -52,13 +52,16 @@ class KeyListBuilder extends ConfigEntityListBuilder {
     /** @var \Drupal\Core\Config\Entity\ConfigEntityInterface $entity */
     $operations = parent::getDefaultOperations($entity);
 
-    if (!$entity->getServiceDefault()) {
-      $operations['set_default'] = array(
-        'title' => t('Set Default'),
-        'weight' => 10,
-        'url' => $entity->urlInfo('set-default'),
-      );
+    $message = 'Set Default';
+    if ($entity->getServiceDefault()) {
+      $message = 'Unset Default';
     }
+
+    $operations['set_default'] = array(
+      'title' => t($message),
+      'weight' => 10,
+      'url' => $entity->urlInfo('set-default'),
+    );
 
     return $operations;
   }

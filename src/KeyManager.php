@@ -83,10 +83,9 @@ class KeyManager {
    */
   public function getKey($key_id = NULL) {
     if ($key_id) {
-      return $this->getDefaultKey();
-    } else {
-
       return $this->entityManager->getStorage('key')->load($key_id);
+    } else {
+      return $this->getDefaultKey();
     }
   }
 

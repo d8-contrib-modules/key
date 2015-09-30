@@ -25,6 +25,13 @@ class KeyDefaultForm extends EntityConfirmFormBase {
   /**
    * {@inheritdoc}
    */
+  public function getDescription() {
+    return $this->t('');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getCancelUrl() {
     return new Url('entity.key.collection');
   }

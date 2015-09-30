@@ -81,8 +81,25 @@ class KeyManager {
    * @param string $key_id
    *   The key ID to use.
    */
-  public function getKey($key_id) {
-    return $this->entityManager->getStorage('key')->load($key_id);
+  public function getKey($key_id = NULL) {
+    if ($key_id) {
+      return $this->entityManager->getStorage('key')->load($key_id);
+    } else {
+      return $this->getDefaultKey();
+    }
+  }
+
+  /*
+   * Loading a default key.
+   */
+  public function getDefaultKey() {
+    $keys = $this->entityManager->getStorage('key')->loadByProperties(['service_default'=>TRUE]);
+
+    if (empty($keys)){
+      throw new \Exception('There is no default key set for the key manager to process.');
+    } else {
+      return array_shift($keys);
+    }
   }
 
   /*
@@ -91,8 +108,21 @@ class KeyManager {
    * @param string $key_id
    *   The key ID to use.
    */
-  public function getKeyValue($key_id) {
-    return $this->entityManager->getStorage('key')->load($key_id)->getKeyValue();
+  public function getKeyValue($key_id = NULL) {
+    if ($key_id) {
+      return $this->entityManager->getStorage('key')
+        ->load($key_id)
+        ->getKeyValue();
+    } else {
+      return $this->getDefaultKeyValue();
+    }
+  }
+
+  /*
+   * Loading default key contents.
+   */
+  public function getDefaultKeyValue() {
+    return $this->getDefaultKey()->getKeyValue();
   }
 
 }

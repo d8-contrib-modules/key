@@ -28,4 +28,21 @@ interface KeyInterface extends ConfigEntityInterface {
    */
   public function getKeySettings();
 
+  /**
+   * If the key is the service default.
+   *
+   * @return boolean
+   */
+  public function getServiceDefault();
+
+  /**
+   * Sets the key as service default.
+   */
+  public function setServiceDefault();
+
+  /**
+   * Removes the key as service default.
+   */
+  public function removeServiceDefault();
+
 }

@@ -108,7 +108,7 @@ class KeyRepositoryTest extends KeyTestBase {
 
     $this->key->set('key_settings', $defaults);
 
-    $settings = $this->keyRepository->getKeyValue($this->key_id);
+    $settings = $this->keyRepository->getKey($this->key_id)->getKeyValue();
     $this->assertEquals($defaults['key_value'], $settings);
   }
 

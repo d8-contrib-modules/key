@@ -8,8 +8,10 @@ namespace Drupal\key;
 
 use Drupal\Component\Plugin\PluginBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-abstract class KeyProviderBase extends PluginBase implements KeyProviderInterface {
+abstract class KeyProviderBase extends PluginBase implements KeyProviderInterface, ContainerFactoryPluginInterface {
 
   /**
    * {@inheritdoc}
@@ -18,6 +20,17 @@ abstract class KeyProviderBase extends PluginBase implements KeyProviderInterfac
     parent::__construct($configuration, $plugin_id, $plugin_definition);
 
     $this->setConfiguration($configuration);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition
+    );
   }
 
   /**

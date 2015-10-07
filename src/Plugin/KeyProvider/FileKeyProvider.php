@@ -38,8 +38,8 @@ class FileKeyProvider extends KeyProviderBase {
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $form['file_location'] = array(
       '#type' => 'textfield',
-      '#title' => $this->t('File location'),
-      '#description' => $this->t('The location of the file in which the key will be stored. The path may be absolute (e.g., %abs), relative to the Drupal directory (e.g., %rel), or defined using a stream wrapper (e.g., %str).', array(
+      '#title' => t('File location'),
+      '#description' => t('The location of the file in which the key will be stored. The path may be absolute (e.g., %abs), relative to the Drupal directory (e.g., %rel), or defined using a stream wrapper (e.g., %str).', array(
         '%abs' => '/etc/keys/foobar.key',
         '%rel' => '../keys/foobar.key',
         '%str' => 'private://keys/foobar.key',

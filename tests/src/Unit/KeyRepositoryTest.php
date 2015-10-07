@@ -3,7 +3,7 @@
  * Provides \Drupal\Tests\key\KeyManagerTest.php
  */
 
-namespace Drupal\Tests\key;
+namespace Drupal\Tests\key\Unit;
 
 use Drupal\key\KeyRepository;
 use Drupal\key\Plugin\KeyProvider\ConfigKeyProvider;

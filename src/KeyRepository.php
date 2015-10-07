@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\key\KeyManager.
+ * Contains \Drupal\key\KeyRepository.
  */
 
 namespace Drupal\key;

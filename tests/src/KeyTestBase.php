@@ -4,7 +4,7 @@
  * Provides \Drupal\Tests\key\KeyTestBase.php.
  */
 
-namespace Drupal\Tests\key\Unit;
+namespace Drupal\Tests\key;
 
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Tests\UnitTestCase;

@@ -46,7 +46,7 @@ class KeyService extends WebTestBase {
 
 
     // Test getKeyValue service.
-    $key_value_string = \Drupal::service('key_repository')->getKeyValue('testing_key');
+    $key_value_string = \Drupal::service('key_repository')->getKey('testing_key')->getKeyValue();
 
     $this->verbose('Key Value: ' . $key_value_string);
 
@@ -106,7 +106,7 @@ class KeyService extends WebTestBase {
     $this->drupalPostForm(NULL, $edit, t('Save'));
 
     // Test getKeyValue service.
-    $key_value_string = \Drupal::service('key_repository')->getKeyValue('testing_key_file');
+    $key_value_string = \Drupal::service('key_repository')->getKey('testing_key_file')->getKeyValue();
 
     $this->verbose('Key Value: ' . $key_value_string);
 

@@ -66,7 +66,7 @@ class Key extends ConfigEntityBase implements KeyInterface {
   /**
    * The Key label.
    *
-   * @var Drupal\key\KeyProviderInterface
+   * @var \Drupal\key\KeyProviderInterface
    */
   protected $key_provider;
 

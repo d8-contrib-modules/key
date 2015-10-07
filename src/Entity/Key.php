@@ -56,56 +56,64 @@ class Key extends ConfigEntityBase implements KeyInterface {
    */
   protected $label;
 
+  /**
+   * The Key description.
+   *
+   * @var string
+   */
   protected $description;
 
+  /**
+   * The Key label.
+   *
+   * @var Drupal\key\KeyProviderInterface
+   */
   protected $key_provider;
 
+  /**
+   * The settings for the key provider.
+   *
+   * @var array
+   */
   protected $key_settings = [];
 
+  /**
+   * If the key is the default of the Key Repository service.
+   *
+   * @var boolean
+   */
   protected $service_default;
 
+  /**
+   * {@inheritdoc}
+   */
   public function getDescription() {
     return $this->description;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function getKeyProvider() {
     return $this->key_provider;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function getKeySettings() {
     return $this->key_settings;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function getServiceDefault() {
     return $this->service_default;
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function setServiceDefault() {
-    $entities = \Drupal::entityManager()
-      ->getStorage('key')
-      ->loadByProperties(['service_default'=>TRUE]);
-    foreach ($entities as $entity) {
-      $entity->service_default = FALSE;
-      $entity->save();
-    }
-
-    $this->service_default = TRUE;
-    $this->save();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function removeServiceDefault() {
-    $this->service_default = FALSE;
-    $this->save();
-  }
-
   /*
-   * Returns key contents.
+   * {@inheritdoc}
    */
   public function getKeyValue() {
     // Create instance of the plugin.

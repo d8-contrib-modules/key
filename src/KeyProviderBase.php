@@ -8,10 +8,8 @@ namespace Drupal\key;
 
 use Drupal\Component\Plugin\PluginBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 abstract class KeyProviderBase extends PluginBase implements KeyProviderInterface {
-  use StringTranslationTrait;
 
   /**
    * {@inheritdoc}

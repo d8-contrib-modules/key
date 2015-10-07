@@ -12,12 +12,12 @@ use Drupal\Core\Entity\EntityManagerInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 
 /**
- * Responsible for the key service.
+ * Responsible for the key management service.
  */
-class KeyManager {
+class KeyRepository {
 
   /**
-   * Create the KeyManager.
+   * Create the KeyRepository.
    *
    * @param \Drupal\Core\Entity\EntityManagerInterface $entityManager
    *   The entity manager.
@@ -90,19 +90,6 @@ class KeyManager {
   }
 
   /*
-   * Loading a default key.
-   */
-  public function getDefaultKey() {
-    $keys = $this->entityManager->getStorage('key')->loadByProperties(['service_default'=>TRUE]);
-
-    if (empty($keys)){
-      throw new \Exception('There is no default key set for the key manager to process.');
-    } else {
-      return array_shift($keys);
-    }
-  }
-
-  /*
    * Loading key contents for a specific key.
    *
    * @param string $key_id
@@ -118,11 +105,48 @@ class KeyManager {
     }
   }
 
-  /*
+  /**
+   * Loading a default key.
+   */
+  public function getDefaultKey() {
+    $keys = $this->entityManager->getStorage('key')->loadByProperties(['service_default'=>TRUE]);
+
+    if (empty($keys)){
+      throw new \Exception('There is no default key set for the key manager to process.');
+    } else {
+      return array_shift($keys);
+    }
+  }
+
+  /**
    * Loading default key contents.
    */
   public function getDefaultKeyValue() {
     return $this->getDefaultKey()->getKeyValue();
+  }
+
+  /**
+   * Sets the key as service default.
+   */
+  public function setDefaultKey(KeyInterface $key) {
+    $entities = \Drupal::entityManager()
+      ->getStorage('key')
+      ->loadByProperties(['service_default'=>TRUE]);
+    foreach ($entities as $entity) {
+      $entity->service_default = FALSE;
+      $entity->save();
+    }
+
+    $key->service_default = TRUE;
+    $key->save();
+  }
+
+  /**
+   * Removes the key as service default.
+   */
+  public function removeDefaultKey(KeyInterface $key) {
+    $key->service_default = FALSE;
+    $key->save();
   }
 
 }

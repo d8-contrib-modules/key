@@ -46,14 +46,14 @@ class KeyService extends WebTestBase {
 
 
     // Test getKeyValue service.
-    $key_value_string = \Drupal::service('key_manager')->getKeyValue('testing_key');
+    $key_value_string = \Drupal::service('key_repository')->getKeyValue('testing_key');
 
     $this->verbose('Key Value: ' . $key_value_string);
 
     $this->assertEqual($key_value_string, $test_string, 'The getKeyValue function is not properly processing');
 
     // Test getKeysByProvider service.
-    $keys = \Drupal::service('key_manager')->getKeysByProvider('config');
+    $keys = \Drupal::service('key_repository')->getKeysByProvider('config');
     $this->assertEqual(count($keys), '1', 'The getKeysByProvider function is not returning 1 config key');
 
     // Create another key using the Configuration key provider.
@@ -74,7 +74,7 @@ class KeyService extends WebTestBase {
     $this->drupalPostForm(NULL, $edit, t('Save'));
 
     // Test getKeysByProvider service.
-    $keys = \Drupal::service('key_manager')->getKeysByProvider('config');
+    $keys = \Drupal::service('key_repository')->getKeysByProvider('config');
     $this->assertEqual(count($keys), '2', 'The getKeysByProvider function is not returning 2 config keys');
   }
 
@@ -106,14 +106,14 @@ class KeyService extends WebTestBase {
     $this->drupalPostForm(NULL, $edit, t('Save'));
 
     // Test getKeyValue service.
-    $key_value_string = \Drupal::service('key_manager')->getKeyValue('testing_key_file');
+    $key_value_string = \Drupal::service('key_repository')->getKeyValue('testing_key_file');
 
     $this->verbose('Key Value: ' . $key_value_string);
 
     $this->assertEqual($key_value_string, $contents, 'The getKeyValue function is not properly processing');
 
     // Test getKeysByStorageMethod service.
-    $keys = \Drupal::service('key_manager')->getKeysByStorageMethod('file');
+    $keys = \Drupal::service('key_repository')->getKeysByStorageMethod('file');
     $this->assertEqual(count($keys), '1', 'The getKeysByStorageMethod function is not returning 1 file key');
 
     // Create a second new file key.
@@ -133,7 +133,7 @@ class KeyService extends WebTestBase {
     $this->drupalPostForm(NULL, $edit, t('Save'));
 
     // Test getKeysByStorageMethod service.
-    $keys = \Drupal::service('key_manager')->getKeysByStorageMethod('file');
+    $keys = \Drupal::service('key_repository')->getKeysByStorageMethod('file');
     $this->assertEqual(count($keys), '2', 'The getKeysByStorageMethod function is not returning 2 file keys');
 
   }

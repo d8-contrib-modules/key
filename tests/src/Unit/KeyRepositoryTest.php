@@ -9,6 +9,9 @@ use Drupal\key\KeyRepository;
 use Drupal\key\Plugin\KeyProvider\ConfigKeyProvider;
 use Drupal\key\Entity\Key;
 
+/**
+ * @group key
+ */
 class KeyRepositoryTest extends KeyTestBase {
 
   /**

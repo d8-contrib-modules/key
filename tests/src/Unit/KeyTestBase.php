@@ -9,6 +9,9 @@ namespace Drupal\Tests\key\Unit;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Tests\UnitTestCase;
 
+/**
+ * @group key
+ */
 class KeyTestBase extends UnitTestCase {
 
   /**

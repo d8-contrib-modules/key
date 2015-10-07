@@ -89,22 +89,6 @@ class KeyRepository {
     }
   }
 
-  /*
-   * Loading key contents for a specific key.
-   *
-   * @param string $key_id
-   *   The key ID to use.
-   */
-  public function getKeyValue($key_id = NULL) {
-    if ($key_id) {
-      return $this->entityManager->getStorage('key')
-        ->load($key_id)
-        ->getKeyValue();
-    } else {
-      return $this->getDefaultKeyValue();
-    }
-  }
-
   /**
    * Loading a default key.
    */
@@ -116,13 +100,6 @@ class KeyRepository {
     } else {
       return array_shift($keys);
     }
-  }
-
-  /**
-   * Loading default key contents.
-   */
-  public function getDefaultKeyValue() {
-    return $this->getDefaultKey()->getKeyValue();
   }
 
   /**

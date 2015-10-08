@@ -43,6 +43,13 @@ interface KeyInterface extends ConfigEntityInterface {
   public function getServiceDefault();
 
   /**
+   * If the key is the service default.
+   *
+   * @param $is_default boolean
+   */
+  public function setServiceDefault($is_default);
+
+  /**
    * Gets the value of the key.
    *
    * @return string

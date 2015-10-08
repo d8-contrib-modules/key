@@ -114,16 +114,14 @@ class KeyRepository {
       $entity->save();
     }
 
-    $key->service_default = TRUE;
-    $key->save();
+    $key->setServiceDefault(TRUE);
   }
 
   /**
    * Removes the key as service default.
    */
   public function removeDefaultKey(KeyInterface $key) {
-    $key->service_default = FALSE;
-    $key->save();
+    $key->setServiceDefault(FALSE);
   }
 
 }

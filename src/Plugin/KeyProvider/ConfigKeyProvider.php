@@ -38,8 +38,8 @@ class ConfigKeyProvider extends KeyProviderBase {
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $form['key_value'] = array(
       '#type' => 'textarea',
-      '#title' => t('Key value'),
-      '#description' => t("Enter the key to save in Drupal's configuration system."),
+      '#title' => $this->t('Key value'),
+      '#description' => $this->t("Enter the key to save in Drupal's configuration system."),
       '#required' => TRUE,
       '#default_value' => $this->getConfiguration()['key_value'],
     );

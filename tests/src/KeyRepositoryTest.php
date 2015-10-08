@@ -5,16 +5,19 @@
 
 namespace Drupal\Tests\key;
 
+use Drupal\key\KeyRepository;
 use Drupal\key\Plugin\KeyProvider\ConfigKeyProvider;
 use Drupal\key\Entity\Key;
-use Drupal\key\KeyManager;
 
-class KeyManagerTest extends KeyTestBase {
+/**
+ * @group key
+ */
+class KeyRepositoryTest extends KeyTestBase {
 
   /**
-   * @var \Drupal\key\KeyManager
+   * @var \Drupal\key\KeyRepository
    */
-  protected $keyManager;
+  protected $keyRepository;
 
   /**
    * @var string
@@ -78,7 +81,7 @@ class KeyManagerTest extends KeyTestBase {
 
     // Assert that the array count is the same for the scenario provided by the
     // data provider above.
-    $entities = $this->keyManager->getKeys($key_ids);
+    $entities = $this->keyRepository->getKeys($key_ids);
     $this->assertEquals(count($keys), count($entities));
   }
 
@@ -88,7 +91,7 @@ class KeyManagerTest extends KeyTestBase {
    * @group key
    */
   public function testGetKey() {
-    $key = $this->keyManager->getKey($this->key_id);
+    $key = $this->keyRepository->getKey($this->key_id);
     $this->assertInstanceOf('\Drupal\key\Entity\Key', $key);
     $this->assertEquals($this->key->get('key_id'), $key->get('key_id'));
   }
@@ -108,7 +111,7 @@ class KeyManagerTest extends KeyTestBase {
 
     $this->key->set('key_settings', $defaults);
 
-    $settings = $this->keyManager->getKeyValue($this->key_id);
+    $settings = $this->keyRepository->getKey($this->key_id)->getKeyValue();
     $this->assertEquals($defaults['key_value'], $settings);
   }
 
@@ -141,7 +144,7 @@ class KeyManagerTest extends KeyTestBase {
 
     $this->key->set('key_settings', $defaults);
 
-    $keys = $this->keyManager->getKeysByProvider('config');
+    $keys = $this->keyRepository->getKeysByProvider('config');
     $this->assertEquals($this->key, $keys[$this->key_id]);
   }
 
@@ -174,7 +177,7 @@ class KeyManagerTest extends KeyTestBase {
 
     $this->key->set('key_settings', $defaults);
 
-    $keys = $this->keyManager->getKeysByStorageMethod('config');
+    $keys = $this->keyRepository->getKeysByStorageMethod('config');
     $this->assertEquals([$this->key_id => $this->key], $keys);
   }
 
@@ -220,7 +223,7 @@ class KeyManagerTest extends KeyTestBase {
     \Drupal::setContainer($this->container);
 
     // Create a new key manager object.
-    $this->keyManager = new KeyManager($this->entityManager, $this->configFactory, $this->KeyProviderManager);
+    $this->keyRepository = new KeyRepository($this->entityManager, $this->configFactory, $this->KeyProviderManager);
   }
 
 }

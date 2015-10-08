@@ -59,9 +59,9 @@ class KeyDefaultForm extends EntityConfirmFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     if ($this->entity->getServiceDefault()) {
-      $this->entity->removeServiceDefault();
+      \Drupal::service('key_repository')->removeDefaultKey($this->entity);
     } else {
-      $this->entity->setServiceDefault();
+      \Drupal::service('key_repository')->setDefaultKey($this->entity);
     }
 
     drupal_set_message(

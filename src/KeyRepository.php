@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\key\KeyManager.
+ * Contains \Drupal\key\KeyRepository.
  */
 
 namespace Drupal\key;
@@ -12,12 +12,12 @@ use Drupal\Core\Entity\EntityManagerInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 
 /**
- * Responsible for the key service.
+ * Responsible for the key management service.
  */
-class KeyManager {
+class KeyRepository {
 
   /**
-   * Create the KeyManager.
+   * Create the KeyRepository.
    *
    * @param \Drupal\Core\Entity\EntityManagerInterface $entityManager
    *   The entity manager.
@@ -89,7 +89,7 @@ class KeyManager {
     }
   }
 
-  /*
+  /**
    * Loading a default key.
    */
   public function getDefaultKey() {
@@ -102,27 +102,26 @@ class KeyManager {
     }
   }
 
-  /*
-   * Loading key contents for a specific key.
-   *
-   * @param string $key_id
-   *   The key ID to use.
+  /**
+   * Sets the key as service default.
    */
-  public function getKeyValue($key_id = NULL) {
-    if ($key_id) {
-      return $this->entityManager->getStorage('key')
-        ->load($key_id)
-        ->getKeyValue();
-    } else {
-      return $this->getDefaultKeyValue();
+  public function setDefaultKey(KeyInterface $key) {
+    $entities = \Drupal::entityManager()
+      ->getStorage('key')
+      ->loadByProperties(['service_default'=>TRUE]);
+    foreach ($entities as $entity) {
+      $entity->service_default = FALSE;
+      $entity->save();
     }
+
+    $key->setServiceDefault(TRUE);
   }
 
-  /*
-   * Loading default key contents.
+  /**
+   * Removes the key as service default.
    */
-  public function getDefaultKeyValue() {
-    return $this->getDefaultKey()->getKeyValue();
+  public function removeDefaultKey(KeyInterface $key) {
+    $key->setServiceDefault(FALSE);
   }
 
 }

@@ -33,17 +33,17 @@ class KeyListBuilder extends WebTestBase {
     $this->assertText(t('No keys are available. Add a key.'));
 
     // Add a key.
-    $test_string = 'testing 123 &*#';
     $this->drupalGet('admin/config/security/key/add');
     $edit = [
       'key_provider' => 'config',
     ];
     $this->drupalPostAjaxForm(NULL, $edit, 'key_provider');
+
     $edit = [
       'id' => 'testing_key',
       'label' => 'Testing Key',
       'key_provider' => 'config',
-      'key_settings[key_value]' => $test_string,
+      'key_settings[key_value]' => 'mustbesixteenbit',
     ];
     $this->drupalPostForm(NULL, $edit, t('Save'));
 

@@ -15,6 +15,13 @@ use Drupal\Core\Config\Entity\ConfigEntityInterface;
 interface KeyInterface extends ConfigEntityInterface {
 
   /**
+   * The description for the key.
+   *
+   * @return string
+   */
+  public function getDescription();
+
+  /**
    * The plugin id of the selected key.
    *
    * @return string
@@ -36,13 +43,17 @@ interface KeyInterface extends ConfigEntityInterface {
   public function getServiceDefault();
 
   /**
-   * Sets the key as service default.
+   * If the key is the service default.
+   *
+   * @param $is_default boolean
    */
-  public function setServiceDefault();
+  public function setServiceDefault($is_default);
 
   /**
-   * Removes the key as service default.
+   * Gets the value of the key.
+   *
+   * @return string
    */
-  public function removeServiceDefault();
+  public function getKeyValue();
 
 }

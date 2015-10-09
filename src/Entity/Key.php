@@ -120,7 +120,7 @@ class Key extends ConfigEntityBase implements KeyInterface {
     $this->save();
   }
 
-  /*
+  /**
    * {@inheritdoc}
    */
   public function getKeyValue() {

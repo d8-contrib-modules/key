@@ -1,17 +1,17 @@
 <?php
 /**
  * @file
- * Provides Drupal\key\KeyTypeBase.
+ * Provides Drupal\key\KeyProviderBase.
  */
 
 namespace Drupal\key;
 
-use Drupal\Component\Plugin\PluginBase;
+use Drupal\Core\Plugin\PluginBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-abstract class KeyTypeBase extends PluginBase implements KeyTypeInterface {
-  use StringTranslationTrait;
+abstract class KeyProviderBase extends PluginBase implements KeyProviderInterface, ContainerFactoryPluginInterface {
 
   /**
    * {@inheritdoc}
@@ -20,6 +20,17 @@ abstract class KeyTypeBase extends PluginBase implements KeyTypeInterface {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
 
     $this->setConfiguration($configuration);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition
+    );
   }
 
   /**

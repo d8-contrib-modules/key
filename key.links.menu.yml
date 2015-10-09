@@ -1,7 +1,13 @@
+key.admin_index:
+  title: Security
+  description: 'Configuring security settings'
+  parent: system.admin_config
+  route_name: key.admin_index
+
 # Key menu items definition
 entity.key.collection:
-  title: 'Key'
+  title: 'Keys'
   route_name: entity.key.collection
-  description: 'List Key'
-  parent: system.admin_structure
+  description: 'Manage sitewide keys.'
+  parent: key.admin_index
 

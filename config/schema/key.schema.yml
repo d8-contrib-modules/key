@@ -10,28 +10,42 @@ key.key.*:
       label: 'Label'
     uuid:
       type: string
-    key_type:
+    description:
+      type: text
+      label: 'Description'
+    key_provider:
       type: string
-      label: Key Type
+      label: Key Provider
     key_settings:
-      type: key.key_type.plugin.[id]
+      type: key.key_provider.plugin.[id]
       label: 'Key Settings'
+    service_default:
+      type: boolean
+      label: 'Service default'
 
-key_type:
+key_provider:
   type: mapping
-  label: 'Key type settings'
+  label: 'Key provider settings'
   mapping:
     id:
       type: string
       label: 'ID'
 
-key.key_type.plugin.*:
-  type: key_type
+key.key_provider.plugin.*:
+  type: key_provider
 
-key.key_type.plugin.key_type_simple:
-  type: key_type
-  label: 'Simple Key'
+key.key_provider.plugin.config:
+  type: key_provider
+  label: 'Configuration'
   mapping:
-    simple_key_value:
+    key_value:
       type: string
       label: 'Key Value'
+
+key.key_provider.plugin.file:
+  type: key_provider
+  label: 'File'
+  mapping:
+    file_location:
+      type: string
+      label: 'File Location'

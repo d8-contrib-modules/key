@@ -32,7 +32,7 @@ class KeyRepository {
     $this->pluginManager = $pluginManager;
   }
 
-  /*
+  /**
    * Loading all keys.
    *
    * @param array $key_ids
@@ -45,23 +45,27 @@ class KeyRepository {
     return $this->entityManager->getStorage('key')->loadMultiple($key_ids);
   }
 
-  /*
+  /**
    * Loading keys that are of the specified key provider.
    *
-   * @param string $key_provider
+   * @param string $key_provider_id
    *   The key provider ID to use.
+   *
+   * @return \Drupal\key\Entity\Key[]
    */
   public function getKeysByProvider($key_provider_id) {
     return $this->entityManager->getStorage('key')->loadByProperties(array('key_provider' => $key_provider_id));
   }
 
-  /*
+  /**
    * Loading keys that are of the specified storage method.
    *
    * Storage method is an annotation of a key's key provider.
    *
    * @param string $storage_method
    *   The storage method of the key provider.
+   *
+   * @return \Drupal\key\Entity\Key[]
    */
   public function getKeysByStorageMethod($storage_method) {
     $key_providers = array_filter($this->pluginManager->getDefinitions(), function ($definition) use ($storage_method) {
@@ -75,11 +79,13 @@ class KeyRepository {
     return $keys;
   }
 
-  /*
+  /**
    * Loading a specific key.
    *
    * @param string $key_id
    *   The key ID to use.
+   *
+   * @return \Drupal\key\Entity\Key|null
    */
   public function getKey($key_id = NULL) {
     if ($key_id) {
@@ -91,6 +97,10 @@ class KeyRepository {
 
   /**
    * Loading a default key.
+   *
+   * @return \Drupal\key\Entity\Key|null
+   *
+   * @throws \Exception
    */
   public function getDefaultKey() {
     $keys = $this->entityManager->getStorage('key')->loadByProperties(['service_default'=>TRUE]);
@@ -104,6 +114,8 @@ class KeyRepository {
 
   /**
    * Sets the key as service default.
+   *
+   * @param \Drupal\key\KeyInterface $key
    */
   public function setDefaultKey(KeyInterface $key) {
     $entities = \Drupal::entityManager()
@@ -119,6 +131,8 @@ class KeyRepository {
 
   /**
    * Removes the key as service default.
+   *
+   * @param \Drupal\key\KeyInterface $key
    */
   public function removeDefaultKey(KeyInterface $key) {
     $key->setServiceDefault(FALSE);

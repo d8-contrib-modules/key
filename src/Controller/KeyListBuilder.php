@@ -19,7 +19,6 @@ class KeyListBuilder extends ConfigEntityListBuilder {
    */
   public function buildHeader() {
     $header['label'] = $this->t('Key');
-    $header['id'] = $this->t('Machine name');
     $header['service_default'] = $this->t('Default');
 
     return $header + parent::buildHeader();
@@ -30,7 +29,6 @@ class KeyListBuilder extends ConfigEntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     $row['label'] = $entity->label();
-    $row['id'] = $entity->id();
     $row['service_default'] = ($entity->getServiceDefault())?"Yes":"No";
     return $row + parent::buildRow($entity);
   }

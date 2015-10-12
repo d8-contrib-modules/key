@@ -19,6 +19,10 @@ class KeyListBuilder extends ConfigEntityListBuilder {
    */
   public function buildHeader() {
     $header['label'] = $this->t('Key');
+    $header['provider'] = array(
+      'data' => t('Provider'),
+      'class' => array(RESPONSIVE_PRIORITY_MEDIUM),
+    );
     $header['service_default'] = $this->t('Default');
 
     return $header + parent::buildHeader();
@@ -29,6 +33,8 @@ class KeyListBuilder extends ConfigEntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     $row['label'] = $entity->label();
+    // TODO: Display the provider label, instead of the machine name.
+    $row['provider'] = $entity->getKeyProvider();
     $row['service_default'] = ($entity->getServiceDefault())?"Yes":"No";
     return $row + parent::buildRow($entity);
   }

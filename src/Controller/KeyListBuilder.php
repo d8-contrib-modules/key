@@ -29,7 +29,7 @@ class KeyListBuilder extends ConfigEntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    $row['label'] = $this->getLabel($entity);
+    $row['label'] = $entity->label();
     $row['id'] = $entity->id();
     $row['service_default'] = ($entity->getServiceDefault())?"Yes":"No";
     return $row + parent::buildRow($entity);

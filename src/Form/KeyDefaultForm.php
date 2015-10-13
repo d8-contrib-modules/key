@@ -23,7 +23,7 @@ class KeyDefaultForm extends EntityConfirmFormBase {
     $message = 'Are you sure you want to make %name the default key?';
 
     if ($this->entity->getServiceDefault()) {
-      $message = 'Are you sure you want to remove the default key from %name?';
+      $message = 'Are you sure you want to unset %name as the default key?';
     }
 
     return $this->t($message, array('%name' => $this->entity->label()));
@@ -48,7 +48,7 @@ class KeyDefaultForm extends EntityConfirmFormBase {
    */
   public function getConfirmText() {
     if ($this->entity->getServiceDefault()) {
-      return $this->t('Remove Default');
+      return $this->t('Unset Default');
     } else {
       return $this->t('Set Default');
     }

@@ -52,6 +52,7 @@ class KeyRepository {
    *   The key provider ID to use.
    *
    * @return \Drupal\key\Entity\Key[]
+   *   An array of key objects indexed by their ids.
    */
   public function getKeysByProvider($key_provider_id) {
     return $this->entityManager->getStorage('key')->loadByProperties(array('key_provider' => $key_provider_id));
@@ -66,6 +67,7 @@ class KeyRepository {
    *   The storage method of the key provider.
    *
    * @return \Drupal\key\Entity\Key[]
+   *   An array of key objects indexed by their ids.
    */
   public function getKeysByStorageMethod($storage_method) {
     $key_providers = array_filter($this->pluginManager->getDefinitions(), function ($definition) use ($storage_method) {
@@ -86,6 +88,7 @@ class KeyRepository {
    *   The key ID to use.
    *
    * @return \Drupal\key\Entity\Key|null
+   *   The key with the given id, defaults to the default key.
    */
   public function getKey($key_id = NULL) {
     if ($key_id) {
@@ -99,8 +102,10 @@ class KeyRepository {
    * Loading a default key.
    *
    * @return \Drupal\key\Entity\Key|null
+   *   A default key.
    *
    * @throws \Exception
+   *   Thrown when no key was found.
    */
   public function getDefaultKey() {
     $keys = $this->entityManager->getStorage('key')->loadByProperties(['service_default'=>TRUE]);
@@ -116,6 +121,7 @@ class KeyRepository {
    * Sets the key as service default.
    *
    * @param \Drupal\key\KeyInterface $key
+   *   The default key.
    */
   public function setDefaultKey(KeyInterface $key) {
     $entities = \Drupal::entityManager()

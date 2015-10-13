@@ -122,8 +122,7 @@ class KeyRepository {
       ->getStorage('key')
       ->loadByProperties(['service_default'=>TRUE]);
     foreach ($entities as $entity) {
-      $entity->service_default = FALSE;
-      $entity->save();
+      $entity->setServiceDefault(FALSE);
     }
 
     $key->setServiceDefault(TRUE);

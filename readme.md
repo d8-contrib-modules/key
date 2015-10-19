@@ -6,7 +6,7 @@ This module provides the ability for site administrators to manage sitewide keys
 
 ## Managing Keys
 
-To manage keys, visit `admin/config/security/key`. When creating a file, enter a name for the key and select the key provider to be used. Additional settings for the selected key provider may be required. For instance, if the File key provider is selected, enter a path to the file that contains the key.
+To manage keys, visit `admin/config/system/key`. When creating a file, enter a name for the key and select the key provider to be used. Additional settings for the selected key provider may be required. For instance, if the File key provider is selected, enter a path to the file that contains the key.
 
 ## Key Providers
 

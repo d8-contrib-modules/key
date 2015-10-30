@@ -129,7 +129,7 @@ class Key extends ConfigEntityBase implements KeyInterface {
     $key_provider = $plugin->createInstance($this->key_provider, $this->key_settings);
 
     // Return its key contents.
-    return $key_provider->getKeyValue();
+    return $key_provider->getKeyValue($this);
   }
 
 }

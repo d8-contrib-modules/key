@@ -107,9 +107,8 @@ class KeyForm extends EntityForm {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $plugin_settings = (new FormState())->setValues($form_state->getValue('key_settings'));
     $plugin = $this->manager->createInstance($form_state->getValue('key_provider'), []);
-    $plugin->submitConfigurationForm($form, $plugin_settings);
+    $plugin->submitConfigurationForm($form, $form_state);
     $form_state->setValue('key_settings', $plugin->getConfiguration());
     parent::submitForm($form, $form_state);
   }
@@ -120,13 +119,8 @@ class KeyForm extends EntityForm {
   public function validateForm(array &$form, FormStateInterface $form_state) {
     // Only run key settings validation if the form is being submitted
     if ($form_state->isSubmitted()) {
-      $plugin_settings = (new FormState())->setValues($form_state->getValue('key_settings'));
       $plugin = $this->manager->createInstance($form_state->getValue('key_provider'), []);
-      $plugin->validateConfigurationForm($form, $plugin_settings);
-      // Reinject errors from $plugin_settings into $form_state
-      foreach ($plugin_settings->getErrors() as $field => $error) {
-        $form_state->setErrorByName($field, $error);
-      }
+      $plugin->validateConfigurationForm($form, $form_state);
     }
     parent::validateForm($form, $form_state);
   }

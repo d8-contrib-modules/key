@@ -20,6 +20,6 @@ interface KeyProviderInterface extends PluginInspectionInterface, ConfigurablePl
    * Returns the value of a key from the key provider.
    * @return string
    */
-  public function getKeyValue();
+  public function getKeyValue(KeyInterface $key);
 
 }

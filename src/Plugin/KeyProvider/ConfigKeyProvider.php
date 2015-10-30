@@ -11,6 +11,8 @@ namespace Drupal\key\Plugin\KeyProvider;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\key\KeyProviderBase;
 
+use Drupal\key\KeyInterface;
+
 /**
  * Adds a key provider that allows a key to be stored in configuration.
  *
@@ -49,20 +51,15 @@ class ConfigKeyProvider extends KeyProviderBase {
   /**
    * {@inheritdoc}
    */
-  public function validateConfigurationForm(array &$form, FormStateInterface $form_state) {
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
-    $this->configuration['key_value'] = $form_state->getValue('key_value');
+    $key_settings = $form_state->getValue('key_settings');
+    $this->configuration['key_value'] = $key_settings['key_value'];
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getKeyValue() {
+  public function getKeyValue(KeyInterface $key) {
     return $this->configuration['key_value'];
   }
 

@@ -11,6 +11,8 @@ namespace Drupal\key\Plugin\KeyProvider;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\key\KeyProviderBase;
 
+use Drupal\key\KeyInterface;
+
 /**
  * Adds a key provider that allows a key to be stored in a file.
  *
@@ -55,7 +57,8 @@ class FileKeyProvider extends KeyProviderBase {
    * {@inheritdoc}
    */
   public function validateConfigurationForm(array &$form, FormStateInterface $form_state) {
-    $file = $form_state->getValue('file_location');
+    $key_settings = $form_state->getValue('key_settings');
+    $file = $key_settings['file_location'];
 
     // Does the file exist and is it readable?
     if (!is_file($file) || !is_readable($file)) {
@@ -67,13 +70,14 @@ class FileKeyProvider extends KeyProviderBase {
    * {@inheritdoc}
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
-    $this->configuration['file_location'] = $form_state->getValue('file_location');
+    $key_settings = $form_state->getValue('key_settings');
+    $this->configuration['file_location'] = $key_settings['file_location'];
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getKeyValue() {
+  public function getKeyValue(KeyInterface $key) {
     $file = $this->configuration['file_location'];
 
     // Make sure the file exists and is readable.

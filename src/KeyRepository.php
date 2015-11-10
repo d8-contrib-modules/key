@@ -118,6 +118,24 @@ class KeyRepository {
   }
 
   /**
+   * Load an array of key names, useful as options in form fields.
+   *
+   * @return array $options
+   *   An array of key names, indexed by id.
+   */
+  public function getKeyNamesAsOptions() {
+    $options = array();
+
+    foreach ($this->getKeys() as $key) {
+      $key_id = $key->id();
+      $key_title = $key->label();
+      $options[$key_id] = (string) $key_title;
+    }
+
+    return $options;
+  }
+
+  /**
    * Sets the key as service default.
    *
    * @param \Drupal\key\KeyInterface $key

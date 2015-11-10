@@ -27,13 +27,13 @@ class KeyListBuilder extends WebTestBase {
     $this->drupalLogin($user1);
 
     // Go to the Key list page.
-    $this->drupalGet('admin/config/security/key');
+    $this->drupalGet('admin/config/system/key');
 
     // Verify that the "no keys" message displays.
     $this->assertText(t('No keys are available. Add a key.'));
 
     // Add a key.
-    $this->drupalGet('admin/config/security/key/add');
+    $this->drupalGet('admin/config/system/key/add');
     $edit = [
       'key_provider' => 'config',
     ];
@@ -48,7 +48,7 @@ class KeyListBuilder extends WebTestBase {
     $this->drupalPostForm(NULL, $edit, t('Save'));
 
     // Go to the Key list page.
-    $this->drupalGet('admin/config/security/key');
+    $this->drupalGet('admin/config/system/key');
 
     // Verify that the "no keys" message does not display.
     $this->assertNoText(t('No keys are available. Add a key.'));

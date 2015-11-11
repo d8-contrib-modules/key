@@ -52,8 +52,8 @@ class ConfigKeyProvider extends KeyProviderBase {
    * {@inheritdoc}
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
-    $key_settings = $form_state->getValue('key_settings');
-    $this->configuration['key_value'] = $key_settings['key_value'];
+    $key_provider_settings = $form_state->getValue('key_provider_settings');
+    $this->configuration['key_value'] = $key_provider_settings['key_value'];
   }
 
   /**

@@ -16,9 +16,9 @@ key.key.*:
     key_provider:
       type: string
       label: Key Provider
-    key_settings:
+    key_provider_settings:
       type: key.key_provider.plugin.[id]
-      label: 'Key Settings'
+      label: 'Key provider settings'
     service_default:
       type: boolean
       label: 'Service default'

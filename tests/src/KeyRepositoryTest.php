@@ -109,7 +109,7 @@ class KeyRepositoryTest extends KeyTestBase {
       ->with('config', $defaults)
       ->willReturn($KeyProvider);
 
-    $this->key->set('key_settings', $defaults);
+    $this->key->set('key_provider_settings', $defaults);
 
     $settings = $this->keyRepository->getKey($this->key_id)->getKeyValue();
     $this->assertEquals($defaults['key_value'], $settings);
@@ -142,7 +142,7 @@ class KeyRepositoryTest extends KeyTestBase {
       ->with(['key_provider' => 'config'])
       ->willReturn([$this->key_id => $this->key]);
 
-    $this->key->set('key_settings', $defaults);
+    $this->key->set('key_provider_settings', $defaults);
 
     $keys = $this->keyRepository->getKeysByProvider('config');
     $this->assertEquals($this->key, $keys[$this->key_id]);
@@ -175,7 +175,7 @@ class KeyRepositoryTest extends KeyTestBase {
       ->with('config', $defaults)
       ->willReturn($KeyProvider);
 
-    $this->key->set('key_settings', $defaults);
+    $this->key->set('key_provider_settings', $defaults);
 
     $keys = $this->keyRepository->getKeysByStorageMethod('config');
     $this->assertEquals([$this->key_id => $this->key], $keys);

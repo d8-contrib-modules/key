@@ -90,14 +90,14 @@ class KeyForm extends EntityForm {
       '#default_value' => $key->getKeyProvider(),
     );
 
-    $form['key_settings'] = [
+    $form['key_provider_settings'] = [
       '#prefix' => '<div id="key-provider-form">',
       '#suffix' => '</div>',
     ];
     if ($this->manager->hasDefinition($key->getKeyProvider())) {
       // @todo compare ids to ensure appropriate plugin values.
-      $plugin = $this->manager->createInstance($key->getKeyProvider(), $key->getKeySettings());
-      $form['key_settings'] += $plugin->buildConfigurationForm([], $form_state);
+      $plugin = $this->manager->createInstance($key->getKeyProvider(), $key->getKeyProviderSettings());
+      $form['key_provider_settings'] += $plugin->buildConfigurationForm([], $form_state);
     }
 
     return $form;
@@ -109,7 +109,7 @@ class KeyForm extends EntityForm {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $plugin = $this->manager->createInstance($form_state->getValue('key_provider'), []);
     $plugin->submitConfigurationForm($form, $form_state);
-    $form_state->setValue('key_settings', $plugin->getConfiguration());
+    $form_state->setValue('key_provider_settings', $plugin->getConfiguration());
     parent::submitForm($form, $form_state);
   }
 
@@ -117,7 +117,7 @@ class KeyForm extends EntityForm {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-    // Only run key settings validation if the form is being submitted
+    // Only run key provider settings validation if the form is being submitted
     if ($form_state->isSubmitted()) {
       $plugin = $this->manager->createInstance($form_state->getValue('key_provider'), []);
       $plugin->validateConfigurationForm($form, $form_state);
@@ -152,7 +152,7 @@ class KeyForm extends EntityForm {
    * @return array
    */
   public function getKeyProviderForm(array &$form, FormStateInterface $form_state) {
-    return $form['key_settings'];
+    return $form['key_provider_settings'];
   }
 
 }

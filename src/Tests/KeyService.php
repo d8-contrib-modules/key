@@ -40,7 +40,7 @@ class KeyService extends WebTestBase {
       'label' => 'Testing Key',
       'description' => 'A test of the Configuration key provider.',
       'key_provider' => 'config',
-      'key_settings[key_value]' => $test_string,
+      'key_provider_settings[key_value]' => $test_string,
     ];
     $this->drupalPostForm(NULL, $edit, t('Save'));
 
@@ -69,7 +69,7 @@ class KeyService extends WebTestBase {
       'label' => 'Testing Key 2',
       'description' => 'A second test of the Configuration key provider.',
       'key_provider' => 'config',
-      'key_settings[key_value]' => $test_string,
+      'key_provider_settings[key_value]' => $test_string,
     ];
     $this->drupalPostForm(NULL, $edit, t('Save'));
 
@@ -101,7 +101,7 @@ class KeyService extends WebTestBase {
       'label' => 'Testing Key File',
       'description' => 'A test of the file key provider.',
       'key_provider' => 'file',
-      'key_settings[file_location]' => $rpath,
+      'key_provider_settings[file_location]' => $rpath,
     ];
     $this->drupalPostForm(NULL, $edit, t('Save'));
 
@@ -128,7 +128,7 @@ class KeyService extends WebTestBase {
       'label' => 'Testing Key File2',
       'description' => 'A second test of the file key provider.',
       'key_provider' => 'file',
-      'key_settings[file_location]' => $rpath,
+      'key_provider_settings[file_location]' => $rpath,
     ];
     $this->drupalPostForm(NULL, $edit, t('Save'));
 

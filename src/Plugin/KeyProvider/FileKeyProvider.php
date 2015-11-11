@@ -57,8 +57,8 @@ class FileKeyProvider extends KeyProviderBase {
    * {@inheritdoc}
    */
   public function validateConfigurationForm(array &$form, FormStateInterface $form_state) {
-    $key_settings = $form_state->getValue('key_settings');
-    $file = $key_settings['file_location'];
+    $key_provider_settings = $form_state->getValue('key_provider_settings');
+    $file = $key_provider_settings['file_location'];
 
     // Does the file exist and is it readable?
     if (!is_file($file) || !is_readable($file)) {
@@ -70,8 +70,8 @@ class FileKeyProvider extends KeyProviderBase {
    * {@inheritdoc}
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
-    $key_settings = $form_state->getValue('key_settings');
-    $this->configuration['file_location'] = $key_settings['file_location'];
+    $key_provider_settings = $form_state->getValue('key_provider_settings');
+    $this->configuration['file_location'] = $key_provider_settings['file_location'];
   }
 
   /**

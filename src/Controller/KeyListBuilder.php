@@ -34,7 +34,7 @@ class KeyListBuilder extends ConfigEntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function __construct(EntityTypeInterface $entity_type, EntityStorageInterface $storage, KeyProviderInterface $key_provider_plugin_manager) {
+  public function __construct(EntityTypeInterface $entity_type, ConfigEntityStorage $storage, KeyProviderInterface $key_provider_plugin_manager) {
     parent::__construct($entity_type, $storage);
     $this->keyProviderPluginManager = $key_provider_plugin_manager;
   }

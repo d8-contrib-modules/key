@@ -8,9 +8,10 @@
 namespace Drupal\key\Controller;
 
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\key\KeyProviderInterface;
+use Drupal\key\KeyProviderPluginManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -34,8 +35,9 @@ class KeyListBuilder extends ConfigEntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function __construct(EntityTypeInterface $entity_type, ConfigEntityStorage $storage, KeyProviderInterface $key_provider_plugin_manager) {
+  public function __construct(EntityTypeInterface $entity_type, EntityStorageInterface $storage, KeyProviderPluginManager $key_provider_plugin_manager) {
     parent::__construct($entity_type, $storage);
+
     $this->keyProviderPluginManager = $key_provider_plugin_manager;
   }
 

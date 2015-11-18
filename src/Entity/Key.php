@@ -75,7 +75,7 @@ class Key extends ConfigEntityBase implements KeyInterface {
    *
    * @var array
    */
-  protected $key_settings = [];
+  protected $key_provider_settings = [];
 
   /**
    * If the key is the default of the Key Repository service.
@@ -101,8 +101,8 @@ class Key extends ConfigEntityBase implements KeyInterface {
   /**
    * {@inheritdoc}
    */
-  public function getKeySettings() {
-    return $this->key_settings;
+  public function getKeyProviderSettings() {
+    return $this->key_provider_settings;
   }
 
   /**
@@ -126,7 +126,7 @@ class Key extends ConfigEntityBase implements KeyInterface {
   public function getKeyValue() {
     // Create instance of the plugin.
     $plugin = \Drupal::service('plugin.manager.key.key_provider');
-    $key_provider = $plugin->createInstance($this->key_provider, $this->key_settings);
+    $key_provider = $plugin->createInstance($this->key_provider, $this->key_provider_settings);
 
     // Return its key contents.
     return $key_provider->getKeyValue($this);

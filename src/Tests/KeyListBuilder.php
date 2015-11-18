@@ -43,7 +43,7 @@ class KeyListBuilder extends WebTestBase {
       'id' => 'testing_key',
       'label' => 'Testing Key',
       'key_provider' => 'config',
-      'key_settings[key_value]' => 'mustbesixteenbit',
+      'key_provider_settings[key_value]' => 'mustbesixteenbit',
     ];
     $this->drupalPostForm(NULL, $edit, t('Save'));
 

@@ -19,9 +19,9 @@ class KeyEntityTest extends KeyTestBase {
 
   /**
    * @var []
-   *   Key settings to use for Configuration key provider.
+   *   Key provider settings to use for Configuration key provider.
    */
-  protected $key_settings;
+  protected $key_provider_settings;
 
   /**
    * Assert that key entity getters work.
@@ -33,13 +33,13 @@ class KeyEntityTest extends KeyTestBase {
     $values = [
       'key_id' => $this->getRandomGenerator()->word(15),
       'key_provider' => 'config',
-      'key_settings' => $this->key_settings,
+      'key_provider_settings' => $this->key_provider_settings,
     ];
     $key = new Key($values, 'key');
 
     $this->assertEquals($values['key_provider'], $key->getKeyProvider());
-    $this->assertEquals($values['key_settings'], $key->getKeySettings());
-    $this->assertEquals($values['key_settings']['key_value'], $key->getKeyValue());
+    $this->assertEquals($values['key_provider_settings'], $key->getKeyProviderSettings());
+    $this->assertEquals($values['key_provider_settings']['key_value'], $key->getKeyValue());
   }
 
   /**
@@ -53,8 +53,8 @@ class KeyEntityTest extends KeyTestBase {
       'title' => 'Configuration',
       'storage_method' => 'config'
     ];
-    $this->key_settings = ['key_value' => $this->createToken()];
-    $plugin = new ConfigKeyProvider($this->key_settings, 'config', $definition);
+    $this->key_provider_settings = ['key_value' => $this->createToken()];
+    $plugin = new ConfigKeyProvider($this->key_provider_settings, 'config', $definition);
 
     // Mock the KeyProviderPluginManager service.
     $this->KeyProviderManager = $this->getMockBuilder('\Drupal\key\KeyProviderPluginManager')
@@ -69,7 +69,7 @@ class KeyEntityTest extends KeyTestBase {
       ]);
     $this->KeyProviderManager->expects($this->any())
       ->method('createInstance')
-      ->with('config', $this->key_settings)
+      ->with('config', $this->key_provider_settings)
       ->willReturn($plugin);
     $this->container->set('plugin.manager.key.key_provider', $this->KeyProviderManager);
 

@@ -33,7 +33,7 @@ interface KeyInterface extends ConfigEntityInterface {
    *
    * @return array
    */
-  public function getKeySettings();
+  public function getKeyProviderSettings();
 
   /**
    * If the key is the service default.

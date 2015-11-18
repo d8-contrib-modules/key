@@ -207,8 +207,8 @@ class KeyRepositoryTest extends KeyTestBase {
       ->with($this->key_id)
       ->willReturn($this->key);
 
-    // Mock the KeyProviderPluginManager service.
-    $this->KeyProviderManager = $this->getMockBuilder('\Drupal\key\KeyProviderPluginManager')
+    // Mock the KeyProviderManager service.
+    $this->KeyProviderManager = $this->getMockBuilder('\Drupal\key\KeyProviderManager')
       ->disableOriginalConstructor()
       ->getMock();
 

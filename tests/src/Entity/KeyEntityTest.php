@@ -56,8 +56,8 @@ class KeyEntityTest extends KeyTestBase {
     $this->key_provider_settings = ['key_value' => $this->createToken()];
     $plugin = new ConfigKeyProvider($this->key_provider_settings, 'config', $definition);
 
-    // Mock the KeyProviderPluginManager service.
-    $this->KeyProviderManager = $this->getMockBuilder('\Drupal\key\KeyProviderPluginManager')
+    // Mock the KeyProviderManager service.
+    $this->KeyProviderManager = $this->getMockBuilder('\Drupal\key\KeyProviderManager')
       ->disableOriginalConstructor()
       ->getMock();
 

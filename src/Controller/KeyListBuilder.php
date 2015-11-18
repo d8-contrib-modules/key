@@ -11,7 +11,7 @@ use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\key\KeyProviderPluginManager;
+use Drupal\key\KeyProviderManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class KeyListBuilder extends ConfigEntityListBuilder {
 
-  private $keyProviderPluginManager;
+  private $KeyProviderManager;
 
   /**
    * {@inheritdoc}
@@ -35,10 +35,10 @@ class KeyListBuilder extends ConfigEntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function __construct(EntityTypeInterface $entity_type, EntityStorageInterface $storage, KeyProviderPluginManager $key_provider_plugin_manager) {
+  public function __construct(EntityTypeInterface $entity_type, EntityStorageInterface $storage, KeyProviderManager $key_provider_manager) {
     parent::__construct($entity_type, $storage);
 
-    $this->keyProviderPluginManager = $key_provider_plugin_manager;
+    $this->KeyProviderManager = $key_provider_manager;
   }
 
   /**
@@ -60,7 +60,7 @@ class KeyListBuilder extends ConfigEntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     $row['label'] = $entity->label();
-    $row['provider'] = $this->keyProviderPluginManager->getDefinition($entity->getKeyProvider())['title'];
+    $row['provider'] = $this->KeyProviderManager->getDefinition($entity->getKeyProvider())['title'];
     $row['service_default'] = ($entity->getServiceDefault())?"Yes":"No";
     return $row + parent::buildRow($entity);
   }

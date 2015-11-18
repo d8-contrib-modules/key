@@ -1,18 +1,20 @@
 <?php
 /**
  * @file
- * Contains Drupal\key\KeyProviderPluginManager.
+ * Contains Drupal\key\KeyProviderManager.
  */
 
 namespace Drupal\key;
 
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Plugin\DefaultPluginManager;
 
 
-class KeyProviderPluginManager extends \Drupal\Core\Plugin\DefaultPluginManager {
+class KeyProviderManager extends DefaultPluginManager {
+
   /**
-   * Constructs a new KeyProviderPluginManager.
+   * Constructs a new KeyProviderManager.
    *
    * @param \Traversable $namespaces
    *   An object that implements \Traversable which contains the root paths
@@ -24,7 +26,7 @@ class KeyProviderPluginManager extends \Drupal\Core\Plugin\DefaultPluginManager 
    */
   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
     parent::__construct('Plugin/KeyProvider', $namespaces, $module_handler, 'Drupal\key\KeyProviderInterface', 'Drupal\key\Annotation\KeyProvider');
-    $this->alterInfo('key_constraint_info');
+    $this->alterInfo('key_provider_info');
     $this->setCacheBackend($cache_backend, 'key_provider');
   }
 

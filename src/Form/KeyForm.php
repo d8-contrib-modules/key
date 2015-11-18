@@ -50,6 +50,7 @@ class KeyForm extends EntityForm {
 
     /** @var $key \Drupal\key\KeyInterface */
     $key = $this->entity;
+    $form_state->set('key_entity', $key);
     $form['#tree'] = TRUE;
     $form['label'] = array(
       '#type' => 'textfield',

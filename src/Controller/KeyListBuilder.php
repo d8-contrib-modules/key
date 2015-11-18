@@ -8,12 +8,39 @@
 namespace Drupal\key\Controller;
 
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
+use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\key\KeyProviderPluginManager;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a listing of Key.
  */
 class KeyListBuilder extends ConfigEntityListBuilder {
+
+  private $keyProviderPluginManager;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type) {
+    return new static(
+      $entity_type,
+      $container->get('entity.manager')->getStorage($entity_type->id()),
+      $container->get('plugin.manager.key.key_provider')
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(EntityTypeInterface $entity_type, EntityStorageInterface $storage, KeyProviderPluginManager $key_provider_plugin_manager) {
+    parent::__construct($entity_type, $storage);
+
+    $this->keyProviderPluginManager = $key_provider_plugin_manager;
+  }
+
   /**
    * {@inheritdoc}
    */
@@ -33,8 +60,7 @@ class KeyListBuilder extends ConfigEntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     $row['label'] = $entity->label();
-    // TODO: Display the provider label, instead of the machine name.
-    $row['provider'] = $entity->getKeyProvider();
+    $row['provider'] = $this->keyProviderPluginManager->getDefinition($entity->getKeyProvider())['title'];
     $row['service_default'] = ($entity->getServiceDefault())?"Yes":"No";
     return $row + parent::buildRow($entity);
   }
